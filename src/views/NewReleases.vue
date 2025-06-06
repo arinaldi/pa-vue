@@ -16,7 +16,7 @@ const { data } = useNewReleases();
         :key="date"
       >
         <h2
-          className="flex items-center gap-2 rounded-md bg-accent px-3 py-2 font-semibold text-xl tracking-tight"
+          class="flex items-center gap-2 rounded-md bg-accent px-3 py-2 font-semibold text-xl tracking-tight"
         >
           {{ date }}
           <Badge class="bg-background" variant="outline">
@@ -32,8 +32,8 @@ const { data } = useNewReleases();
               )
             "
           >
-            <span className="text-muted-foreground">{{ item.artist }}</span>
-            <span className="flex items-center gap-2">
+            <span class="text-muted-foreground">{{ item.artist }}</span>
+            <span class="flex items-center gap-2">
               {{ item.title }}
               <!-- <ReleaseActions release="{r}" /> -->
             </span>

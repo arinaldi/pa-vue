@@ -13,15 +13,12 @@ const { data } = useFeaturedSongs();
     <div class="flex flex-col gap-8">
       <template v-for="[letter, items] in Object.entries(data?.songs ?? {})" :key="letter">
         <div v-if="items.length > 0">
-          <h2
-            className="border-b pb-2 text-xl font-semibold tracking-tight"
-            :id="`letter-${letter}`"
-          >
+          <h2 class="border-b pb-2 text-xl font-semibold tracking-tight" :id="`letter-${letter}`">
             {{ letter }}
           </h2>
           <ul class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <li v-for="item in items" :key="item.id" class="text-sm">
-              <span className="flex items-center gap-2">
+              <span class="flex items-center gap-2">
                 <span>
                   <span class="text-muted-foreground"> {{ item.artist }} &ndash; </span>{{ ' ' }}
                   <a
