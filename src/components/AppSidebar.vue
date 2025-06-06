@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { RouterView } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { Disc } from 'lucide-vue-next';
 
+import { Badge } from '@/components/ui/badge';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -32,6 +34,7 @@ import { ROUTES } from '@/lib/constants';
 import { getCookie } from '@/lib/utils';
 
 const props = defineProps<SidebarProps>();
+const route = useRoute();
 const sidebarState = getCookie(SIDEBAR_COOKIE_NAME);
 const defaultOpen = ref(true);
 
@@ -81,12 +84,25 @@ if (sidebarState) {
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem class="hidden md:block">
-                <BreadcrumbLink href="#"> Building Your Application </BreadcrumbLink>
+                <BreadcrumbLink as-child>
+                  <RouterLink to="/">Home</RouterLink>
+                </BreadcrumbLink>
               </BreadcrumbItem>
-              <BreadcrumbSeparator class="hidden md:block" />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-              </BreadcrumbItem>
+              <template v-if="route.meta.title">
+                <BreadcrumbSeparator class="hidden md:block" />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>
+                    <span class="flex items-center gap-2">
+                      <span>{{ route.meta.title }}</span>
+                      <span v-if="route.meta.count">
+                        <Badge variant="secondary">
+                          {{ route.meta.count.toLocaleString() }}
+                        </Badge>
+                      </span>
+                    </span>
+                  </BreadcrumbPage>
+                </BreadcrumbItem>
+              </template>
             </BreadcrumbList>
           </Breadcrumb>
         </div>
