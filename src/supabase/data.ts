@@ -1,5 +1,37 @@
-import { formatFavorites, formatReleases, formatSongs } from '@/lib/formatters';
+import {
+  formatFavorites,
+  formatRankingsAllTime,
+  formatReleases,
+  formatSongs,
+} from '@/lib/formatters';
 import { supabase } from '@/supabase/client';
+
+export async function getAllTimeRankings() {
+  const { data, error } = await supabase
+    .from('rankings')
+    .select(
+      `
+            all_time_position,
+            id,
+            position,
+            album:albums (
+              artist,
+              id,
+              title,
+              year
+            )
+          `,
+    )
+    .gte('all_time_position', 1)
+    .order('all_time_position', { ascending: true });
+
+  if (error) throw new Error(error.message);
+
+  return {
+    count: data.length,
+    favorites: formatRankingsAllTime(data),
+  };
+}
 
 export async function getFavorites() {
   const { data, error } = await supabase

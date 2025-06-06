@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { mutate } from 'swrv';
 
 import { ROUTE_HREF } from '@/lib/constants';
-import { getFavorites, getReleases, getSongs } from '@/supabase/data';
+import { getAllTimeRankings, getFavorites, getReleases, getSongs } from '@/supabase/data';
 import Home from '@/views/Home.vue';
 
 interface Data {
@@ -40,7 +40,17 @@ const router = createRouter({
       path: ROUTE_HREF.TOP_ALBUMS,
     },
     {
-      beforeEnter: (to, from, next) => {
+      beforeEnter: async (to, from, next) => {
+        const key = ROUTE_HREF.ALL_TIME;
+        let data = cache.get(key);
+
+        if (!data) {
+          data = await getAllTimeRankings();
+          cache.set(key, data);
+          mutate(key, data);
+        }
+
+        to.meta.count = data.count;
         to.meta.title = 'All-time';
         next();
       },

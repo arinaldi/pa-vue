@@ -8,6 +8,7 @@ import { SPOTIFY_URL } from '@/lib/constants';
 import { useTopAlbums } from '@/lib/use-data';
 
 const { data } = useTopAlbums();
+const favorites = data?.value?.favorites ?? {};
 </script>
 
 <template>
@@ -15,7 +16,7 @@ const { data } = useTopAlbums();
     <DecadeLink />
     <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 md:gap-8 lg:grid-cols-3 2xl:grid-cols-4">
       <template
-        v-for="[year, items] in Object.entries(data?.favorites ?? {}).sort(
+        v-for="[year, items] in Object.entries(favorites).sort(
           (a, b) => Number(b[0]) - Number(a[0]),
         )"
         :key="year"

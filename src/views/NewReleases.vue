@@ -5,16 +5,14 @@ import { useNewReleases } from '@/lib/use-data';
 import { cn } from '@/lib/utils';
 
 const { data } = useNewReleases();
+const releases = data?.value?.releases ?? {};
 </script>
 
 <template>
   <div class="space-y-4">
     <!-- <AddReleaseModal /> -->
     <div class="space-y-8">
-      <div
-        v-for="[date, items] in Object.entries(data?.releases ?? {}).sort(sortReleases)"
-        :key="date"
-      >
+      <div v-for="[date, items] in Object.entries(releases).sort(sortReleases)" :key="date">
         <h2
           class="flex items-center gap-2 rounded-md bg-accent px-3 py-2 font-semibold text-xl tracking-tight"
         >
