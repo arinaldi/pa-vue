@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { mutate } from 'swrv';
 
 import { ROUTE_HREF } from '@/lib/constants';
-import { getReleases } from '@/supabase/data';
+import { getReleases, getSongs } from '@/supabase/data';
 import Home from '@/views/Home.vue';
 
 interface Data {
@@ -39,7 +39,17 @@ const router = createRouter({
       path: ROUTE_HREF.ALL_TIME,
     },
     {
-      beforeEnter: (to, from, next) => {
+      beforeEnter: async (to, from, next) => {
+        const key = ROUTE_HREF.FEATURED_SONGS;
+        let data = cache.get(key);
+
+        if (!data) {
+          data = await getSongs();
+          cache.set(key, data);
+          mutate(key, data);
+        }
+
+        to.meta.count = data.count;
         to.meta.title = 'Featured songs';
         next();
       },
@@ -49,12 +59,13 @@ const router = createRouter({
     },
     {
       beforeEnter: async (to, from, next) => {
-        let data = cache.get(ROUTE_HREF.NEW_RELEASES);
+        const key = ROUTE_HREF.NEW_RELEASES;
+        let data = cache.get(key);
 
         if (!data) {
           data = await getReleases();
-          cache.set(ROUTE_HREF.NEW_RELEASES, data);
-          mutate(ROUTE_HREF.NEW_RELEASES, data);
+          cache.set(key, data);
+          mutate(key, data);
         }
 
         to.meta.count = data.count;
