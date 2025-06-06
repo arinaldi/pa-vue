@@ -8,34 +8,47 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-  // useSidebar,
+  useSidebar,
 } from '@/components/ui/sidebar';
-// import { cn } from '@/lib/utils';
 import type { Route } from '@/lib/types';
 
 const props = defineProps<{
   route: Route;
 }>();
-
+const { setOpenMobile } = useSidebar();
 const currentRoute = useRoute();
 const pathMatch = computed(() => currentRoute.path === props.route.href);
 const active = computed(() =>
   props.route.items ? pathMatch.value : currentRoute.path.startsWith(props.route.href),
 );
-// const parentActive = computed(() => (props.route.items ? pathMatch.value : true));
+
+function closeMobile() {
+  setOpenMobile(false);
+}
 </script>
 
 <template>
   <SidebarMenuItem>
     <SidebarMenuButton as-child :is-active="active">
-      <RouterLink active-class="font-medium" class="text-muted-foreground" :to="route.href">{{
-        route.label
-      }}</RouterLink>
+      <RouterLink
+        active-class="font-medium"
+        class="text-muted-foreground"
+        @click="closeMobile"
+        :to="route.href"
+      >
+        <props.route.icon />
+        {{ route.label }}
+      </RouterLink>
     </SidebarMenuButton>
     <SidebarMenuSub v-if="route.items?.length">
       <SidebarMenuSubItem v-for="item in route.items" :key="item.label">
         <SidebarMenuSubButton as-child :is-active="currentRoute.path.startsWith(item.href)">
-          <RouterLink active-class="font-medium" class="text-muted-foreground" :to="item.href">
+          <RouterLink
+            active-class="font-medium"
+            class="text-muted-foreground"
+            @click="closeMobile"
+            :to="item.href"
+          >
             {{ item.label }}
           </RouterLink>
         </SidebarMenuSubButton>
