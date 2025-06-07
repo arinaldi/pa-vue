@@ -10,6 +10,7 @@ import {
   SidebarMenuSubItem,
   useSidebar,
 } from '@/components/ui/sidebar';
+import { cn } from '@/lib/utils';
 import type { Route } from '@/lib/types';
 
 const props = defineProps<{
@@ -43,13 +44,11 @@ function closeMobile() {
     <SidebarMenuSub v-if="route.items?.length">
       <SidebarMenuSubItem v-for="item in route.items" :key="item.label">
         <SidebarMenuSubButton as-child :is-active="currentRoute.path.startsWith(item.href)">
-          <RouterLink
-            active-class="font-medium"
-            class="text-muted-foreground"
-            @click="closeMobile"
-            :to="item.href"
-          >
-            {{ item.label }}
+          <RouterLink @click="closeMobile" :to="item.href">
+            <span
+              :class="cn(currentRoute.path === item.href ? 'font-medium' : 'text-muted-foreground')"
+              >{{ item.label }}</span
+            >
           </RouterLink>
         </SidebarMenuSubButton>
       </SidebarMenuSubItem>
