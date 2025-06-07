@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useColorMode } from '@vueuse/core';
 import { toast } from 'vue-sonner';
@@ -23,13 +24,14 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { ROUTE_HREF, ROUTES_ADMIN } from '@/lib/constants';
+import { sessionKey } from '@/lib/utils';
 import { supabase } from '@/supabase/client';
 
 const route = useRoute();
 const router = useRouter();
 const { isMobile, setOpenMobile } = useSidebar();
 const colorMode = useColorMode();
-const session = false;
+const session = inject(sessionKey);
 
 function signIn() {
   setOpenMobile(false);
@@ -63,18 +65,15 @@ async function signOut() {
               <Avatar class="size-8 rounded-lg">
                 <AvatarImage class="bg-gray-300" src="/avatars/03.png" />
                 <AvatarFallback class="rounded-lg">
-                  <!-- {`${session.user.user_metadata.firstName[0]}${session.user.user_metadata.lastName[0]}`} -->
-                  TS
+                  {{
+                    `${session.user.user_metadata.firstName[0]}${session.user.user_metadata.lastName[0]}`
+                  }}
                 </AvatarFallback>
               </Avatar>
               <div class="grid flex-1 text-left text-sm leading-tight">
-                <span class="truncate font-semibold">
-                  <!-- {session.user.user_metadata.name} -->
-                  Tony Sleeves
-                </span>
+                <span class="truncate font-semibold"> {{ session.user.user_metadata.name }} </span>
                 <span class="truncate text-xs">
-                  <!-- {session.user.email} -->
-                  tony@example.com
+                  {{ session.user.email }}
                 </span>
               </div>
             </template>
@@ -96,18 +95,17 @@ async function signOut() {
                 <Avatar class="size-8 rounded-lg">
                   <AvatarImage class="bg-gray-300" src="/avatars/03.png" />
                   <AvatarFallback class="rounded-lg">
-                    <!-- {`${session.user.user_metadata.firstName[0]}${session.user.user_metadata.lastName[0]}`} -->
-                    TS
+                    {{
+                      `${session.user.user_metadata.firstName[0]}${session.user.user_metadata.lastName[0]}`
+                    }}
                   </AvatarFallback>
                 </Avatar>
                 <div class="grid flex-1 text-left text-sm leading-tight">
                   <span class="truncate font-semibold">
-                    <!-- {session.user.user_metadata.name} -->
-                    Tony Sleeves
+                    {{ session.user.user_metadata.name }}
                   </span>
                   <span class="truncate text-xs">
-                    <!-- {session.user.email} -->
-                    tony@example.com
+                    {{ session.user.email }}
                   </span>
                 </div>
               </div>
