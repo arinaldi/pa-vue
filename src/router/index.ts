@@ -122,6 +122,15 @@ const router = createRouter({
       path: ROUTE_HREF.ARTISTS,
     },
     {
+      beforeEnter: async (to, from, next) => {
+        to.meta.title = 'Sign in';
+        next();
+      },
+      component: () => import('@/views/Signin.vue'),
+      name: 'signin',
+      path: ROUTE_HREF.SIGNIN,
+    },
+    {
       component: () => import('@/views/NotFound.vue'),
       name: 'not-found',
       path: ROUTE_HREF.NOT_FOUND,

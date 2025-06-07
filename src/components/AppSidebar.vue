@@ -18,6 +18,7 @@ import { Separator } from '@/components/ui/separator';
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarHeader,
   SidebarInset,
@@ -30,6 +31,7 @@ import {
   type SidebarProps,
 } from '@/components/ui/sidebar';
 import { SIDEBAR_COOKIE_NAME } from '@/components/ui/sidebar/utils';
+import UserMenu from '@/components/UserMenu.vue';
 import { ROUTES } from '@/lib/constants';
 import { getCookie } from '@/lib/utils';
 
@@ -74,6 +76,9 @@ if (sidebarState) {
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <UserMenu />
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
     <SidebarInset>
