@@ -1,7 +1,13 @@
 import useSWRV, { type IConfig } from 'swrv';
 
 import { ROUTE_HREF } from '@/lib/constants';
-import { getAllTimeRankings, getFavorites, getReleases, getSongs } from '@/supabase/data';
+import {
+  getAllTimeRankings,
+  getArtists,
+  getFavorites,
+  getReleases,
+  getSongs,
+} from '@/supabase/data';
 
 const config: IConfig = {
   dedupingInterval: Infinity,
@@ -10,6 +16,10 @@ const config: IConfig = {
 
 export function useAllTimeRankings() {
   return useSWRV(ROUTE_HREF.ALL_TIME, getAllTimeRankings, config);
+}
+
+export function useArtists() {
+  return useSWRV(ROUTE_HREF.ARTISTS, getArtists, config);
 }
 
 export function useFeaturedSongs() {

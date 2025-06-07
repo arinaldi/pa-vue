@@ -33,6 +33,23 @@ export async function getAllTimeRankings() {
   };
 }
 
+interface Artist {
+  artist: string;
+}
+
+export async function getArtists() {
+  const { data, error } = await supabase.rpc('get_artists');
+
+  if (error) throw new Error(error.message);
+
+  const artists = data as unknown as Artist[];
+
+  return {
+    artists: artists.map((a) => a.artist),
+    count: artists.length,
+  };
+}
+
 export async function getFavorites() {
   const { data, error } = await supabase
     .from('albums')
