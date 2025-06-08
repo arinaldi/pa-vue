@@ -1,15 +1,14 @@
 <script lang="ts" setup>
-import { inject } from 'vue';
-
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import TopLink from '@/components/TopLink.vue';
 import { SPOTIFY_URL } from '@/lib/constants';
 import { useAllTimeRankings } from '@/lib/use-data';
-import { cn, sessionKey } from '@/lib/utils';
+import { useSession } from '@/lib/use-session';
+import { cn } from '@/lib/utils';
 
-const session = inject(sessionKey);
+const session = useSession();
 const { data } = useAllTimeRankings();
 const favorites = data?.value?.favorites ?? [];
 </script>

@@ -1,5 +1,3 @@
-import type { InjectionKey, Ref } from 'vue';
-import { type Session } from '@supabase/supabase-js';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -28,5 +26,3 @@ export function getCookie(name: string) {
 
   return null;
 }
-
-export const sessionKey = Symbol() as InjectionKey<Ref<Session | null>>;

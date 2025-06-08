@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-import { useMediaQuery } from '@vueuse/core';
-
 import { Button, type ButtonProps, type ButtonVariants } from '@/components/ui/button';
+import { useSidebar } from '@/components/ui/sidebar';
 import Spinner from '@/components/Spinner.vue';
-import { MOBILE_MEDIA_QUERY } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
 interface Props extends ButtonProps {
@@ -13,14 +11,14 @@ interface Props extends ButtonProps {
 }
 
 const props = defineProps<Props>();
-const mobile = useMediaQuery(MOBILE_MEDIA_QUERY);
+const { isMobile } = useSidebar();
 </script>
 
 <template>
   <Button
     :class="cn(props.class, 'relative')"
     :disabled="props.submitting"
-    :size="mobile ? 'lg' : 'default'"
+    :size="isMobile ? 'lg' : 'default'"
     type="submit"
     :variant="props.variant || 'default'"
   >

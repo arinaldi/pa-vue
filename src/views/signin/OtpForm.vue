@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { useRouter } from 'vue-router';
 import { useForm } from 'vee-validate';
-import { useMediaQuery } from '@vueuse/core';
 
 import { Button } from '@/components/ui/button';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -11,8 +10,9 @@ import {
   PinInputSeparator,
   PinInputSlot,
 } from '@/components/ui/pin-input';
+import { useSidebar } from '@/components/ui/sidebar';
 import SubmitButton from '@/components/SubmitButton.vue';
-import { EMAIL, MESSAGES, MOBILE_MEDIA_QUERY, ROUTES_ADMIN } from '@/lib/constants';
+import { EMAIL, MESSAGES, ROUTES_ADMIN } from '@/lib/constants';
 import { useSubmit } from '@/lib/use-submit';
 import { supabase } from '@/supabase/client';
 import { typedVerifyOtpSchema, type VerifyOtpInput } from './schema';
@@ -24,7 +24,7 @@ const props = defineProps<{
   email: string;
 }>();
 const router = useRouter();
-const mobile = useMediaQuery(MOBILE_MEDIA_QUERY);
+const { isMobile } = useSidebar();
 const form = useForm({
   initialValues: {
     code: [],
@@ -93,7 +93,7 @@ const { onSubmit, submitting } = useSubmit({
       <Button
         class="w-full"
         @click="onCancel"
-        :size="mobile ? 'lg' : 'default'"
+        :size="isMobile ? 'lg' : 'default'"
         type="button"
         variant="outline"
       >

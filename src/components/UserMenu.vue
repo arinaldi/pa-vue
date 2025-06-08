@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useColorMode } from '@vueuse/core';
 import { toast } from 'vue-sonner';
@@ -24,14 +23,14 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { ROUTE_HREF, ROUTES_ADMIN } from '@/lib/constants';
-import { sessionKey } from '@/lib/utils';
+import { useSession } from '@/lib/use-session';
 import { supabase } from '@/supabase/client';
 
 const route = useRoute();
 const router = useRouter();
+const session = useSession();
 const { isMobile, setOpenMobile } = useSidebar();
 const colorMode = useColorMode();
-const session = inject(sessionKey);
 
 function signIn() {
   setOpenMobile(false);

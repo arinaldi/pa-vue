@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { RouterView } from 'vue-router';
 import { useRoute } from 'vue-router';
-import { Disc } from 'lucide-vue-next';
+import { Disc, Lock } from 'lucide-vue-next';
 
 import { Badge } from '@/components/ui/badge';
 import {
@@ -20,6 +20,8 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarInset,
   SidebarMenu,
@@ -32,11 +34,13 @@ import {
 } from '@/components/ui/sidebar';
 import { SIDEBAR_COOKIE_NAME } from '@/components/ui/sidebar/utils';
 import UserMenu from '@/components/UserMenu.vue';
-import { ROUTES } from '@/lib/constants';
+import { ROUTES, ROUTES_ADMIN } from '@/lib/constants';
+import { useSession } from '@/lib/use-session';
 import { getCookie } from '@/lib/utils';
 
 const props = defineProps<SidebarProps>();
 const route = useRoute();
+const session = useSession();
 const sidebarState = getCookie(SIDEBAR_COOKIE_NAME);
 const defaultOpen = ref(true);
 
@@ -74,6 +78,20 @@ if (sidebarState) {
               <MenuLink :route="route" />
             </template>
           </SidebarMenu>
+        </SidebarGroup>
+        <SidebarGroup v-if="session">
+          <SidebarGroupLabel>Protected</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <MenuLink
+                :route="{
+                  href: ROUTES_ADMIN.base.href,
+                  icon: Lock,
+                  label: ROUTES_ADMIN.base.label,
+                }"
+              />
+            </SidebarMenu>
+          </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>

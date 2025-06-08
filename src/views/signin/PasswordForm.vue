@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import { useForm } from 'vee-validate';
-import { useMediaQuery } from '@vueuse/core';
 
 import { Button } from '@/components/ui/button';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useSidebar } from '@/components/ui/sidebar';
 import SubmitButton from '@/components/SubmitButton.vue';
-import { MOBILE_MEDIA_QUERY, ROUTES_ADMIN } from '@/lib/constants';
+import { ROUTES_ADMIN } from '@/lib/constants';
 import { useSubmit } from '@/lib/use-submit';
 import { supabase } from '@/supabase/client';
 import { typedSignInSchema, type SignInInput } from './schema';
@@ -19,7 +19,7 @@ const props = defineProps<{
   email: string;
 }>();
 const router = useRouter();
-const mobile = useMediaQuery(MOBILE_MEDIA_QUERY);
+const { isMobile } = useSidebar();
 const form = useForm({
   initialValues: {
     password: '',
@@ -53,7 +53,7 @@ const { onSubmit, submitting } = useSubmit({
       <FormItem>
         <FormLabel>Password</FormLabel>
         <FormControl>
-          <Input type="password" v-bind="componentField" />
+          <Input autofocus type="password" v-bind="componentField" />
         </FormControl>
         <FormMessage />
       </FormItem>
@@ -63,7 +63,7 @@ const { onSubmit, submitting } = useSubmit({
       <Button
         class="w-full"
         @click="onCancel"
-        :size="mobile ? 'lg' : 'default'"
+        :size="isMobile ? 'lg' : 'default'"
         type="button"
         variant="outline"
         >Cancel</Button

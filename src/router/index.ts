@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { mutate } from 'swrv';
 
-import { ROUTE_HREF } from '@/lib/constants';
+import { ROUTE_HREF, ROUTES_ADMIN } from '@/lib/constants';
 import {
   getAllTimeRankings,
   getArtists,
@@ -10,10 +10,23 @@ import {
   getSongs,
 } from '@/supabase/data';
 import Home from '@/views/Home.vue';
+import { supabase } from '@/supabase/client';
 
 interface Data {
   count: number;
   [key: string]: unknown;
+}
+
+async function validateSession() {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (!session) {
+    return { name: 'not-found' };
+  }
+
+  return null;
 }
 
 const cache = new Map<string, Data>();
@@ -122,13 +135,28 @@ const router = createRouter({
       path: ROUTE_HREF.ARTISTS,
     },
     {
-      beforeEnter: async (to, from, next) => {
+      beforeEnter: (to, from, next) => {
         to.meta.title = 'Sign in';
         next();
       },
       component: () => import('@/views/Signin.vue'),
       name: 'signin',
       path: ROUTE_HREF.SIGNIN,
+    },
+    {
+      beforeEnter: async (to, from, next) => {
+        const result = await validateSession();
+
+        if (result) {
+          return next(result);
+        }
+
+        to.meta.title = 'Admin';
+        next();
+      },
+      component: () => import('@/views/Admin.vue'),
+      name: 'admin',
+      path: ROUTES_ADMIN.base.href,
     },
     {
       component: () => import('@/views/NotFound.vue'),
