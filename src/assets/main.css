@@ -44,6 +44,7 @@ code {
   --accent: oklch(0.97 0.0013 286.38);
   --accent-foreground: oklch(0.21 0.0059 285.88);
   --destructive: oklch(0.64 0.2078 25.33);
+  --destructive-foreground: oklch(0.9848 0 0);
   --border: oklch(0.92 0.004 286.32);
   --input: oklch(0.92 0.004 286.32);
   --ring: oklch(0.63 0.17 149.2);
@@ -78,6 +79,7 @@ code {
   --accent: oklch(0.27 0.0063 34.3);
   --accent-foreground: hsl(0 0% 98%);
   --destructive: oklch(0.4 0.1331 25.72);
+  --destructive-foreground: oklch(0.971 0.0127 17.38);
   --border: oklch(0.27 0.0055 286.03);
   --input: oklch(0.27 0.0055 286.03);
   --ring: oklch(0.53 0.1371 150.05);

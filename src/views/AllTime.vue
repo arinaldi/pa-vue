@@ -1,19 +1,22 @@
 <script lang="ts" setup>
+import { inject } from 'vue';
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import TopLink from '@/components/TopLink.vue';
 import { SPOTIFY_URL } from '@/lib/constants';
 import { useAllTimeRankings } from '@/lib/use-data';
-import { cn } from '@/lib/utils';
+import { cn, sessionKey } from '@/lib/utils';
 
+const session = inject(sessionKey);
 const { data } = useAllTimeRankings();
 const favorites = data?.value?.favorites ?? [];
 </script>
 
 <template>
   <div class="space-y-4 max-w-md" id="top">
-    <Button>Edit</Button>
+    <Button v-if="session">Edit</Button>
     <Card>
       <CardContent>
         <ol class="ml-4 list-decimal">

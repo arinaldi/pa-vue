@@ -2,7 +2,7 @@
 import { Badge } from '@/components/ui/badge';
 // import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import DecadeLink from '@/components/DecadeLink.vue';
+import DecadeLink from '@/views/albums/DecadeLink.vue';
 import TopLink from '@/components/TopLink.vue';
 import { SPOTIFY_URL } from '@/lib/constants';
 import { useTopAlbums } from '@/lib/use-data';

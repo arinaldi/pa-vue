@@ -49,6 +49,9 @@ export const DECADES = [
 
 export const EMAIL = import.meta.env.VITE_EMAIL;
 
+const MOBILE_BREAKPOINT = 768;
+export const MOBILE_MEDIA_QUERY = `(max-width: ${MOBILE_BREAKPOINT - 1}px)`;
+
 export const MONTHS = [
   'Jan',
   'Feb',

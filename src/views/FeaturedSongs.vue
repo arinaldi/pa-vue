@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import LetterLink from '@/components/LetterLink.vue';
+import LetterLink from '@/views/songs/LetterLink.vue';
 import TopLink from '@/components/TopLink.vue';
 import { useFeaturedSongs } from '@/lib/use-data';
 
