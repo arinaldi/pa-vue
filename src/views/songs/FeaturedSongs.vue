@@ -1,18 +1,21 @@
 <script lang="ts" setup>
-import LetterLink from '@/views/songs/LetterLink.vue';
 import TopLink from '@/components/TopLink.vue';
 import { useFeaturedSongs } from '@/lib/use-data';
+import { useSession } from '@/lib/use-session';
+import AddSongModal from './AddSongModal.vue';
+import LetterLink from './LetterLink.vue';
+import SongActions from './SongActions.vue';
 
+const session = useSession();
 const { data } = useFeaturedSongs();
-const songs = data?.value?.songs ?? {};
 </script>
 
 <template>
   <div class="space-y-4" id="top">
-    <!-- <AddSongModal /> -->
+    <AddSongModal v-if="session" />
     <LetterLink />
     <div class="flex flex-col gap-8">
-      <template v-for="[letter, items] in Object.entries(songs)" :key="letter">
+      <template v-for="[letter, items] in Object.entries(data?.songs ?? {})" :key="letter">
         <div v-if="items.length > 0">
           <h2 class="border-b pb-2 text-xl font-semibold tracking-tight" :id="`letter-${letter}`">
             {{ letter }}
@@ -31,7 +34,7 @@ const songs = data?.value?.songs ?? {};
                     {{ item.title }}
                   </a>
                 </span>
-                <!-- <SongActions song={s} /> -->
+                <SongActions v-if="session" :song="item" />
               </span>
             </li>
           </ul>

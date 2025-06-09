@@ -15,22 +15,22 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/comp
 import { Input } from '@/components/ui/input';
 import SubmitButton from '@/components/SubmitButton.vue';
 import { MESSAGES } from '@/lib/constants';
-import { useNewReleases } from '@/lib/use-data';
+import { useFeaturedSongs } from '@/lib/use-data';
 import { useSubmit } from '@/lib/use-submit';
 import { supabase } from '@/supabase/client';
-import { typedReleaseSchema, type ReleaseInput } from './schema';
+import { typedSongSchema, type SongInput } from './schema';
 
-const initialValues: ReleaseInput = {
+const initialValues: SongInput = {
   artist: '',
   title: '',
-  date: '',
+  link: '',
 };
 const open = ref(false);
 const form = useForm({
   initialValues,
-  validationSchema: typedReleaseSchema,
+  validationSchema: typedSongSchema,
 });
-const { mutate } = useNewReleases();
+const { mutate } = useFeaturedSongs();
 const { onSubmit, submitting } = useSubmit({
   callbacks: [
     () => {
@@ -40,17 +40,14 @@ const { onSubmit, submitting } = useSubmit({
     },
   ],
   handleSubmit: form.handleSubmit,
-  submitFn: async ({ date, ...rest }: ReleaseInput) => {
-    const { error } = await supabase.from('releases').insert({
-      ...rest,
-      date: date.length === 0 ? null : date,
-    });
+  submitFn: async (data: SongInput) => {
+    const { error } = await supabase.from('songs').insert(data);
 
     if (error) {
       throw new Error(error.message);
     }
   },
-  successMessage: `${MESSAGES.RELEASE_PREFIX} added`,
+  successMessage: `${MESSAGES.SONG_PREFIX} added`,
 });
 
 function setOpen(value: boolean) {
@@ -61,12 +58,12 @@ function setOpen(value: boolean) {
 <template>
   <Dialog :open="open" @update:open="setOpen">
     <DialogTrigger asChild>
-      <Button>Add release</Button>
+      <Button>Add song</Button>
     </DialogTrigger>
     <DialogContent>
       <DialogHeader class="text-left">
-        <DialogTitle>Add release</DialogTitle>
-        <DialogDescription>What&apos;s the newest release?</DialogDescription>
+        <DialogTitle>Add song</DialogTitle>
+        <DialogDescription>What&apos;s the next featured song?</DialogDescription>
       </DialogHeader>
       <form class="space-y-4" @submit="onSubmit">
         <FormField v-slot="{ componentField }" name="artist">
@@ -87,11 +84,11 @@ function setOpen(value: boolean) {
             <FormMessage />
           </FormItem>
         </FormField>
-        <FormField v-slot="{ componentField }" name="date">
+        <FormField v-slot="{ componentField }" name="link">
           <FormItem>
-            <FormLabel>Date</FormLabel>
+            <FormLabel>Link</FormLabel>
             <FormControl>
-              <Input type="date" v-bind="componentField" />
+              <Input inputmode="url" v-bind="componentField" />
             </FormControl>
             <FormMessage />
           </FormItem>
