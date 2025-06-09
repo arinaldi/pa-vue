@@ -54,7 +54,7 @@ const router = createRouter({
         to.meta.title = 'Top albums';
         next();
       },
-      component: () => import('@/views/TopAlbums.vue'),
+      component: () => import('@/views/albums/TopAlbums.vue'),
       name: 'top-albums',
       path: ROUTE_HREF.TOP_ALBUMS,
     },
@@ -73,7 +73,7 @@ const router = createRouter({
         to.meta.title = 'All-time';
         next();
       },
-      component: () => import('@/views/AllTime.vue'),
+      component: () => import('@/views/albums/AllTime.vue'),
       name: 'all-time',
       path: ROUTE_HREF.ALL_TIME,
     },
@@ -92,7 +92,7 @@ const router = createRouter({
         to.meta.title = 'Featured songs';
         next();
       },
-      component: () => import('@/views/FeaturedSongs.vue'),
+      component: () => import('@/views/songs/FeaturedSongs.vue'),
       name: 'featured-songs',
       path: ROUTE_HREF.FEATURED_SONGS,
     },
@@ -111,7 +111,7 @@ const router = createRouter({
         to.meta.title = 'New releases';
         next();
       },
-      component: () => import('@/views/NewReleases.vue'),
+      component: () => import('@/views/releases/NewReleases.vue'),
       name: 'new-releases',
       path: ROUTE_HREF.NEW_RELEASES,
     },
@@ -130,7 +130,7 @@ const router = createRouter({
         to.meta.title = 'Artists';
         next();
       },
-      component: () => import('@/views/Artists.vue'),
+      component: () => import('@/views/artists/Artists.vue'),
       name: 'artists',
       path: ROUTE_HREF.ARTISTS,
     },
@@ -139,7 +139,7 @@ const router = createRouter({
         to.meta.title = 'Sign in';
         next();
       },
-      component: () => import('@/views/Signin.vue'),
+      component: () => import('@/views/signin/Signin.vue'),
       name: 'signin',
       path: ROUTE_HREF.SIGNIN,
     },
@@ -154,7 +154,7 @@ const router = createRouter({
         to.meta.title = 'Admin';
         next();
       },
-      component: () => import('@/views/Admin.vue'),
+      component: () => import('@/views/admin/Admin.vue'),
       name: 'admin',
       path: ROUTES_ADMIN.base.href,
     },

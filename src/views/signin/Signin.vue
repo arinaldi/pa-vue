@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-import EmailForm from './signin/EmailForm.vue';
-import OtpForm from './signin/OtpForm.vue';
-import PasswordForm from './signin/PasswordForm.vue';
-import { type View } from './signin/schema';
+import EmailForm from './EmailForm.vue';
+import OtpForm from './OtpForm.vue';
+import PasswordForm from './PasswordForm.vue';
+import { type View } from './schema';
 
 const view = ref<View>('email');
 const email = ref('');

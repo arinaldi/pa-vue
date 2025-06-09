@@ -2,17 +2,23 @@
 import { Badge } from '@/components/ui/badge';
 import { sortReleases } from '@/lib/formatters';
 import { useNewReleases } from '@/lib/use-data';
+import { useSession } from '@/lib/use-session';
 import { cn } from '@/lib/utils';
+import AddReleaseModal from './AddReleaseModal.vue';
+import ReleaseActions from './ReleaseActions.vue';
 
+const session = useSession();
 const { data } = useNewReleases();
-const releases = data?.value?.releases ?? {};
 </script>
 
 <template>
   <div class="space-y-4">
-    <!-- <AddReleaseModal /> -->
+    <AddReleaseModal v-if="session" />
     <div class="space-y-8">
-      <div v-for="[date, items] in Object.entries(releases).sort(sortReleases)" :key="date">
+      <div
+        v-for="[date, items] in Object.entries(data?.releases ?? {}).sort(sortReleases)"
+        :key="date"
+      >
         <h2
           class="flex items-center gap-2 rounded-md bg-accent px-3 py-2 font-semibold text-xl tracking-tight"
         >
@@ -33,7 +39,7 @@ const releases = data?.value?.releases ?? {};
             <span class="text-muted-foreground">{{ item.artist }}</span>
             <span class="flex items-center gap-2">
               {{ item.title }}
-              <!-- <ReleaseActions release="{r}" /> -->
+              <ReleaseActions v-if="session" :release="item" />
             </span>
           </li>
         </ul>
