@@ -17,7 +17,9 @@ import {
 import { cn } from '@/lib/utils';
 import { getAdminData } from '@/supabase/data';
 import DataEmptyPlaceholder from './DataEmptyPlaceholder.vue';
+import FacetedFilter from './FacetedFilter.vue';
 import Paginate from './Paginate.vue';
+import ResetFilters from './ResetFilters.vue';
 import Search from './Search.vue';
 import SortableColumn from './SortableColumn.vue';
 
@@ -58,11 +60,11 @@ async function getData(adminParams: LocationQuery) {
   <div class="mt-4 flex flex-col gap-2 lg:flex-row lg:items-center">
     <Search />
     <div class="flex flex-wrap items-center gap-2">
-      <!-- <FacetedFilter queryKey="cd" title="CD" />
-          <FacetedFilter queryKey="favorite" title="Favorite" />
-          <FacetedFilter queryKey="studio" title="Studio" />
-          <FacetedFilter queryKey="wishlist" title="Wishlist" />
-          <ResetFilters queryKeys={['cd', 'favorite', 'studio', 'wishlist']} /> -->
+      <FacetedFilter queryKey="cd" title="CD" />
+      <FacetedFilter queryKey="favorite" title="Favorite" />
+      <FacetedFilter queryKey="studio" title="Studio" />
+      <FacetedFilter queryKey="wishlist" title="Wishlist" />
+      <ResetFilters :queryKeys="['cd', 'favorite', 'studio', 'wishlist']" />
     </div>
   </div>
 
