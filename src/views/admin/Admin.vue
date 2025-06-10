@@ -71,40 +71,45 @@ async function getData(adminParams: LocationQuery) {
   <div v-if="data?.albums.length === 0" class="mt-4 flex justify-center">
     <DataEmptyPlaceholder />
   </div>
-  <div v-if="data?.albums && data.albums.length > 0" class="mt-4 rounded-md border">
-    <Table>
-      <TableHeader>
-        <TableRow class="text-xs">
-          <SortableColumn prop="artist">Artist</SortableColumn>
-          <SortableColumn prop="year">Year</SortableColumn>
-          <SortableColumn prop="title">Title</SortableColumn>
-          <TableHead />
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        <TableRow v-for="album in data.albums" :key="album.id">
-          <TableCell>{{ album.artist }}</TableCell>
-          <TableCell>{{ album.year }}</TableCell>
-          <TableCell>
-            <Disc v-if="album.cd" class="mr-1 mb-0.5 inline size-4 text-muted-foreground" />
-            <HeartPlus
-              v-if="album.wishlist"
-              class="mr-1 mb-0.5 inline size-4 text-muted-foreground"
-            />
-            <span
-              :class="cn(album.studio ? 'font-medium' : 'font-light', album.favorite && 'italic')"
-            >
-              {{ album.title }}
-            </span>
-            <Check v-if="album.favorite" class="mb-0.5 ml-1 inline size-4 text-muted-foreground" />
-          </TableCell>
-          <TableCell class="flex items-end justify-end gap-2">
-            <!-- <AlbumActions album={a} />
+  <template v-if="data?.albums && data.albums.length > 0">
+    <div class="mt-4 rounded-md border">
+      <Table>
+        <TableHeader>
+          <TableRow class="text-xs">
+            <SortableColumn prop="artist">Artist</SortableColumn>
+            <SortableColumn prop="year">Year</SortableColumn>
+            <SortableColumn prop="title">Title</SortableColumn>
+            <TableHead />
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow v-for="album in data.albums" :key="album.id">
+            <TableCell>{{ album.artist }}</TableCell>
+            <TableCell>{{ album.year }}</TableCell>
+            <TableCell>
+              <Disc v-if="album.cd" class="mr-1 mb-0.5 inline size-4 text-muted-foreground" />
+              <HeartPlus
+                v-if="album.wishlist"
+                class="mr-1 mb-0.5 inline size-4 text-muted-foreground"
+              />
+              <span
+                :class="cn(album.studio ? 'font-medium' : 'font-light', album.favorite && 'italic')"
+              >
+                {{ album.title }}
+              </span>
+              <Check
+                v-if="album.favorite"
+                class="mb-0.5 ml-1 inline size-4 text-muted-foreground"
+              />
+            </TableCell>
+            <TableCell class="flex items-end justify-end gap-2">
+              <!-- <AlbumActions album={a} />
             <TableLink id={a.id} /> -->
-          </TableCell>
-        </TableRow>
-      </TableBody>
-    </Table>
-  </div>
-  <Paginate :total="data?.count ?? 0" />
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </div>
+    <Paginate :total="data?.count ?? 0" />
+  </template>
 </template>

@@ -52,6 +52,7 @@ const router = createRouter({
 
         to.meta.count = data.count;
         to.meta.title = 'Top albums';
+        setTitle('Top albums');
         next();
       },
       component: () => import('@/views/albums/TopAlbums.vue'),
@@ -71,6 +72,7 @@ const router = createRouter({
 
         to.meta.count = data.count;
         to.meta.title = 'All-time';
+        setTitle('All-time');
         next();
       },
       component: () => import('@/views/albums/AllTime.vue'),
@@ -90,6 +92,7 @@ const router = createRouter({
 
         to.meta.count = data.count;
         to.meta.title = 'Featured songs';
+        setTitle('Featured songs');
         next();
       },
       component: () => import('@/views/songs/FeaturedSongs.vue'),
@@ -109,6 +112,7 @@ const router = createRouter({
 
         to.meta.count = data.count;
         to.meta.title = 'New releases';
+        setTitle('New releases');
         next();
       },
       component: () => import('@/views/releases/NewReleases.vue'),
@@ -128,6 +132,7 @@ const router = createRouter({
 
         to.meta.count = data.count;
         to.meta.title = 'Artists';
+        setTitle('Artists');
         next();
       },
       component: () => import('@/views/artists/Artists.vue'),
@@ -137,6 +142,7 @@ const router = createRouter({
     {
       beforeEnter: (to, from, next) => {
         to.meta.title = 'Sign in';
+        setTitle('Sign in');
         next();
       },
       component: () => import('@/views/signin/Signin.vue'),
@@ -152,6 +158,7 @@ const router = createRouter({
         }
 
         to.meta.title = 'Admin';
+        setTitle('Admin');
         next();
       },
       component: () => import('@/views/admin/Admin.vue'),
@@ -167,3 +174,7 @@ const router = createRouter({
 });
 
 export default router;
+
+function setTitle(value: string) {
+  document.title = `${value} | Perfect Albums`;
+}
