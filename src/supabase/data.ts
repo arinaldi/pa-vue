@@ -1,3 +1,6 @@
+import { type LocationQuery } from 'vue-router';
+
+import { PER_PAGE, SORT_DIRECTION } from '@/lib/constants';
 import {
   formatFavorites,
   formatRankingsAllTime,
@@ -5,6 +8,110 @@ import {
   formatSongs,
 } from '@/lib/formatters';
 import { supabase } from '@/supabase/client';
+
+const { ASC, DESC } = SORT_DIRECTION;
+
+async function getAlbums(adminParams: LocationQuery) {
+  const { cd, favorite, sort, studio, wishlist } = adminParams;
+  const page = typeof adminParams.page === 'string' ? parseInt(adminParams.page, 10) : 1;
+  const perPage =
+    typeof adminParams.perPage === 'string' ? parseInt(adminParams.perPage, 10) : PER_PAGE.SMALL;
+  const [sortProp, desc] = typeof sort === 'string' ? sort.split(':') : [];
+  const direction = desc ? DESC : ASC;
+  const start = (page - 1) * perPage;
+  const end = page * perPage - 1;
+  const search = typeof adminParams.search === 'string' ? adminParams.search.trim() : '';
+  const searchTerm = `%${search}%`;
+
+  let query = supabase
+    .from('albums')
+    .select('*', { count: 'exact' })
+    .or(`artist.ilike.${searchTerm}, title.ilike.${searchTerm}`)
+    .range(start, end);
+
+  if (cd) {
+    query = query.eq('cd', cd === 'true');
+  }
+
+  if (favorite) {
+    query = query.eq('favorite', favorite === 'true');
+  }
+
+  if (studio) {
+    query = query.eq('studio', studio === 'true');
+  }
+
+  if (wishlist) {
+    query = query.eq('wishlist', wishlist === 'true');
+  }
+
+  if (sortProp) {
+    query = query.order(sortProp, { ascending: direction === ASC });
+  } else {
+    query = query.order('artist', { ascending: true }).order('title', { ascending: true });
+  }
+
+  if (sortProp === 'artist') {
+    query = query.order('title', { ascending: true });
+  } else {
+    query = query.order('artist', { ascending: direction === ASC });
+  }
+
+  const { count, data: albums, error } = await query;
+
+  if (error) throw new Error(error.message);
+
+  return {
+    albums,
+    count: count ?? 0,
+  };
+}
+
+async function getCdCount(adminParams: LocationQuery) {
+  const { cd, favorite, search, studio, wishlist } = adminParams;
+  const searchTerm = `%${search}%`;
+
+  let query = supabase
+    .from('albums')
+    .select('*', { count: 'exact', head: true })
+    .eq('cd', true)
+    .or(`artist.ilike.${searchTerm}, title.ilike.${searchTerm}`);
+
+  if (cd) {
+    query = query.eq('cd', cd === 'true');
+  }
+
+  if (favorite) {
+    query = query.eq('favorite', favorite === 'true');
+  }
+
+  if (studio) {
+    query = query.eq('studio', studio === 'true');
+  }
+
+  if (wishlist) {
+    query = query.eq('wishlist', wishlist === 'true');
+  }
+
+  const { count, error } = await query;
+
+  if (error) throw new Error(error.message);
+
+  return count ?? 0;
+}
+
+export async function getAdminData(adminParams: LocationQuery) {
+  const [{ albums, count }, cdCount] = await Promise.all([
+    getAlbums(adminParams),
+    getCdCount(adminParams),
+  ]);
+
+  return {
+    albums,
+    cdCount,
+    count,
+  };
+}
 
 export async function getAllTimeRankings() {
   const { data, error } = await supabase
