@@ -1,6 +1,6 @@
 import { type LocationQuery } from 'vue-router';
 
-import { PER_PAGE, SORT_DIRECTION } from '@/lib/constants';
+import { MESSAGES, PER_PAGE, SORT_DIRECTION } from '@/lib/constants';
 import {
   formatFavorites,
   formatRankingsAllTime,
@@ -10,6 +10,22 @@ import {
 import { supabase } from '@/supabase/client';
 
 const { ASC, DESC } = SORT_DIRECTION;
+
+export async function getAlbum(id: string | undefined) {
+  if (!id) {
+    throw new Error(MESSAGES.NO_DATA);
+  }
+
+  const { data: album, error } = await supabase
+    .from('albums')
+    .select('*')
+    .eq('id', parseInt(id, 10))
+    .single();
+
+  if (error) throw new Error(error.message);
+
+  return { album };
+}
 
 async function getAlbums(adminParams: LocationQuery) {
   const { cd, favorite, sort, studio, wishlist } = adminParams;

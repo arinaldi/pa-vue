@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue';
-import { useRoute, type LocationQuery } from 'vue-router';
-import { Check, Disc, HeartPlus } from 'lucide-vue-next';
+import { RouterLink, useRoute, type LocationQuery } from 'vue-router';
+import { Check, ChevronRight, Disc, HeartPlus } from 'lucide-vue-next';
+import { toast } from 'vue-sonner';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -13,7 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-// import { ROUTES_ADMIN } from '@/lib/constants';
+import { MESSAGES, ROUTES_ADMIN } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import { getAdminData } from '@/supabase/data';
 import DataEmptyPlaceholder from './DataEmptyPlaceholder.vue';
@@ -37,7 +38,8 @@ async function getData(adminParams: LocationQuery) {
   try {
     data.value = await getAdminData(adminParams);
   } catch (error) {
-    console.error('Error fetching admin data:', error);
+    const message = error instanceof Error ? error.message : MESSAGES.ERROR;
+    toast.error(message);
   } finally {
     loading.value = false;
   }
@@ -46,9 +48,14 @@ async function getData(adminParams: LocationQuery) {
 
 <template>
   <div class="flex items-center justify-between gap-2">
-    <!-- <Link search={(prev) => prev} to={ROUTES_ADMIN.add.href}>
-    </Link> -->
-    <Button type="button">Add album</Button>
+    <RouterLink
+      :to="{
+        path: ROUTES_ADMIN.add.href,
+        query: route.query,
+      }"
+    >
+      <Button type="button">Add album</Button>
+    </RouterLink>
     <div class="flex items-center gap-4 dark:text-white">
       <code class="text-xs">{{ version }}</code>
       <span class="flex items-center gap-0.5">
@@ -103,8 +110,17 @@ async function getData(adminParams: LocationQuery) {
               />
             </TableCell>
             <TableCell class="flex items-end justify-end gap-2">
-              <!-- <AlbumActions album={a} />
-            <TableLink id={a.id} /> -->
+              <!-- <AlbumActions album={a} /> -->
+              <Button asChild class="size-8 p-0" variant="ghost">
+                <RouterLink
+                  :to="{
+                    path: ROUTES_ADMIN.edit.href.replace(':id', album.id.toString()),
+                    query: route.query,
+                  }"
+                >
+                  <ChevronRight class="size-4" />
+                </RouterLink>
+              </Button>
             </TableCell>
           </TableRow>
         </TableBody>

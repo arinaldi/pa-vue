@@ -117,11 +117,9 @@ if (sidebarState) {
                   <BreadcrumbPage>
                     <span class="flex items-center gap-2">
                       <span>{{ route.meta.title }}</span>
-                      <span v-if="route.meta.count">
-                        <Badge variant="secondary">
-                          {{ route.meta.count.toLocaleString() }}
-                        </Badge>
-                      </span>
+                      <Badge v-if="route.meta.count" variant="secondary">
+                        {{ route.meta.count.toLocaleString() }}
+                      </Badge>
                     </span>
                   </BreadcrumbPage>
                 </BreadcrumbItem>

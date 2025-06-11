@@ -2,7 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { mutate } from 'swrv';
 
 import { ROUTE_HREF, ROUTES_ADMIN } from '@/lib/constants';
+import type { Album } from '@/lib/types';
 import {
+  getAlbum,
   getAllTimeRankings,
   getArtists,
   getFavorites,
@@ -166,6 +168,41 @@ const router = createRouter({
       path: ROUTES_ADMIN.base.href,
     },
     {
+      beforeEnter: async (to, from, next) => {
+        const result = await validateSession();
+
+        if (result) {
+          return next(result);
+        }
+
+        to.meta.title = 'Add album';
+        setTitle('Add album');
+        next();
+      },
+      component: () => import('@/views/admin/AddAlbum.vue'),
+      name: 'add-album',
+      path: ROUTES_ADMIN.add.href,
+    },
+    {
+      beforeEnter: async (to, from, next) => {
+        const result = await validateSession();
+
+        if (result) {
+          return next(result);
+        }
+
+        const { album } = await getAlbum(to.params.id as string);
+
+        to.meta.album = album;
+        to.meta.title = 'Edit album';
+        setTitle('Edit album');
+        next();
+      },
+      component: () => import('@/views/admin/EditAlbum.vue'),
+      name: 'edit-album',
+      path: ROUTES_ADMIN.edit.href,
+    },
+    {
       component: () => import('@/views/NotFound.vue'),
       name: 'not-found',
       path: ROUTE_HREF.NOT_FOUND,
@@ -177,4 +214,12 @@ export default router;
 
 function setTitle(value: string) {
   document.title = `${value} | Perfect Albums`;
+}
+
+declare module 'vue-router' {
+  interface RouteMeta {
+    album?: Album;
+    count?: number;
+    title: string;
+  }
 }
