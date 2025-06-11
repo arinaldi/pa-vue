@@ -4,6 +4,7 @@ import { MESSAGES, PER_PAGE, SORT_DIRECTION } from '@/lib/constants';
 import {
   formatFavorites,
   formatRankingsAllTime,
+  formatRankingsByYear,
   formatReleases,
   formatSongs,
 } from '@/lib/formatters';
@@ -201,6 +202,32 @@ export async function getFavorites() {
   return {
     count: data.length,
     favorites: formatFavorites(data),
+  };
+}
+
+export async function getRankingsByYear(year: string) {
+  const { data, error } = await supabase
+    .from('albums')
+    .select(
+      `
+      artist,
+      id,
+      title,
+      year,
+      ranking:rankings (
+        all_time_position,
+        id,
+        position
+      )
+    `,
+    )
+    .match({ favorite: true, year });
+
+  if (error) throw new Error(error.message);
+
+  return {
+    count: data.length,
+    favorites: formatRankingsByYear(data),
   };
 }
 

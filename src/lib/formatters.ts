@@ -160,15 +160,21 @@ interface RankedAlbumByYear {
 }
 
 export function formatRankingsByYear(rankings: RankedAlbumByYear[]): AllTimeListItem[] {
-  return rankings.map((r) => ({
-    allTimeRanking: r.ranking?.all_time_position ?? 0,
-    artist: r.artist,
-    id: r.id,
-    ranking: r.ranking?.position ?? 0,
-    rankingId: r.ranking?.id ?? 0,
-    title: r.title,
-    year: r.year,
-  }));
+  return rankings
+    .map((r) => ({
+      allTimeRanking: r.ranking?.all_time_position ?? 0,
+      artist: r.artist,
+      id: r.id,
+      ranking: r.ranking?.position ?? 0,
+      rankingId: r.ranking?.id ?? 0,
+      title: r.title,
+      year: r.year,
+    }))
+    .sort((a, b) => {
+      if (a.ranking > b.ranking) return 1;
+      if (a.ranking < b.ranking) return -1;
+      return 0;
+    });
 }
 
 interface RankedAlbumAllTime {

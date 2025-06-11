@@ -1,10 +1,13 @@
 <script lang="ts" setup>
+import { RouterLink } from 'vue-router';
+import { Pencil } from 'lucide-vue-next';
+
 import { Badge } from '@/components/ui/badge';
-// import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import DecadeLink from '@/views/albums/DecadeLink.vue';
 import TopLink from '@/components/TopLink.vue';
-import { SPOTIFY_URL } from '@/lib/constants';
+import { ROUTE_HREF, SPOTIFY_URL } from '@/lib/constants';
 import { useTopAlbums } from '@/lib/use-data';
 
 const { data } = useTopAlbums();
@@ -30,11 +33,11 @@ const favorites = data?.value?.favorites ?? {};
                   {{ items.length.toLocaleString() }}
                 </Badge>
               </CardTitle>
-              <!-- <Link to={ROUTE_HREF.EDIT_RANKINGS.replace(':year', year)}>
-                      <Button size="icon" variant="outline">
-                        <Pencil class="size-4" />
-                      </Button>
-                    </Link> -->
+              <RouterLink :to="ROUTE_HREF.EDIT_RANKINGS.replace(':year', year)">
+                <Button size="icon" variant="outline">
+                  <Pencil class="size-4" />
+                </Button>
+              </RouterLink>
             </div>
           </CardHeader>
           <CardContent>

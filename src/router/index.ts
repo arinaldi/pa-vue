@@ -8,11 +8,13 @@ import {
   getAllTimeRankings,
   getArtists,
   getFavorites,
+  getRankingsByYear,
   getReleases,
   getSongs,
 } from '@/supabase/data';
 import Home from '@/views/Home.vue';
 import { supabase } from '@/supabase/client';
+import type { AllTimeListItem } from '@/lib/formatters';
 
 interface Data {
   count: number;
@@ -60,6 +62,28 @@ const router = createRouter({
       component: () => import('@/views/albums/TopAlbums.vue'),
       name: 'top-albums',
       path: ROUTE_HREF.TOP_ALBUMS,
+    },
+    {
+      beforeEnter: async (to, from, next) => {
+        const result = await validateSession();
+
+        if (result) {
+          return next(result);
+        }
+
+        const year = to.params.year as string;
+        const title = `Rankings for ${year}`;
+        const { count, favorites } = await getRankingsByYear(year);
+
+        to.meta.count = count;
+        to.meta.favorites = favorites;
+        to.meta.title = title;
+        setTitle(title);
+        next();
+      },
+      component: () => import('@/views/albums/EditRankings.vue'),
+      name: 'edit-rankings',
+      path: ROUTE_HREF.EDIT_RANKINGS,
     },
     {
       beforeEnter: async (to, from, next) => {
@@ -220,6 +244,7 @@ declare module 'vue-router' {
   interface RouteMeta {
     album?: Album;
     count?: number;
+    favorites?: AllTimeListItem[];
     title: string;
   }
 }

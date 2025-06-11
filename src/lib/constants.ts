@@ -7,6 +7,7 @@ import type { Route } from '@/lib/types';
 export enum MESSAGES {
   ALBUM_PREFIX = 'Album successfully',
   SONG_PREFIX = 'Song successfully',
+  RANKING_PREFIX = 'Ranking successfully',
   RELEASE_PREFIX = 'Release successfully',
   ERROR = 'Something went wrong',
   NO_DATA = 'No data',
