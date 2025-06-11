@@ -23,7 +23,7 @@ const { isMobile } = useSidebar();
     :variant="props.variant || 'default'"
   >
     <span v-if="submitting" class="absolute inset-0 flex items-center justify-center">
-      <Spinner className="size-4" />
+      <Spinner class="size-4" />
     </span>
     <span :class="cn(submitting && 'invisible', 'flex items-center gap-2')">
       <slot />

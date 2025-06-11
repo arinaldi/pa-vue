@@ -39,12 +39,12 @@ function goToPage(value: number) {
 <template>
   <!-- Desktop version -->
   <div class="mt-4 hidden sm:flex sm:items-center sm:justify-end">
-    <div className="flex items-center gap-10">
+    <div class="flex items-center gap-10">
       <PerPage />
       <p class="font-medium text-sm">
         Page {{ page.toLocaleString() }} of {{ lastPage.toLocaleString() }}
       </p>
-      <div className="flex items-center gap-2">
+      <div class="flex items-center gap-2">
         <Button @click="goToPage(1)" :disabled="isFirstPage" size="icon" variant="outline">
           <span class="sr-only">Go to first page</span>
           <ChevronsLeft class="size-4" />

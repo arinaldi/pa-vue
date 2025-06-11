@@ -133,9 +133,9 @@ async function fetchReleases(artist: string) {
         v-if="results.data.length > 0"
         class="max-h-[400px] rounded-md border sm:max-h-[800px]"
       >
-        <div className="p-4">
+        <div class="p-4">
           <Badge variant="secondary">{{ results.data.length.toLocaleString() }}</Badge>
-          <ul className="mt-4 space-y-4">
+          <ul class="mt-4 space-y-4">
             <li v-for="item in results.data" :key="item.id" class="space-y-1 text-sm">
               <a
                 :class="
@@ -150,7 +150,7 @@ async function fetchReleases(artist: string) {
               >
                 {{ item.name }}
               </a>
-              <p className="text-muted-foreground font-light">
+              <p class="text-muted-foreground font-light">
                 {{ item.date }}
               </p>
             </li>
