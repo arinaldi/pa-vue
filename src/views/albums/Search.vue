@@ -8,10 +8,12 @@ import InputSpinner from '@/components/InputSpinner.vue';
 import { Input } from '@/components/ui/input';
 import { DEBOUNCE_IN_MS } from '@/lib/constants';
 
+const { searching } = defineProps<{
+  searching: boolean;
+}>();
 const route = useRoute();
 const router = useRouter();
 const input = ref();
-const searching = ref(false);
 const defaultSearch = ref('');
 
 watch(() => route.query.search, setSearch, { immediate: true });

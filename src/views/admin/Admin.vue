@@ -32,10 +32,8 @@ const data = ref<Awaited<ReturnType<typeof getAdminData>> | null>(null);
 watch(() => route.query, getData, { immediate: true });
 
 async function getData(adminParams: LocationQuery) {
-  data.value = null;
-  loading.value = true;
-
   try {
+    loading.value = true;
     data.value = await getAdminData(adminParams);
   } catch (error) {
     const message = error instanceof Error ? error.message : MESSAGES.ERROR;
@@ -65,7 +63,7 @@ async function getData(adminParams: LocationQuery) {
     </div>
   </div>
   <div class="mt-4 flex flex-col gap-2 lg:flex-row lg:items-center">
-    <Search />
+    <Search :searching="loading" />
     <div class="flex flex-wrap items-center gap-2">
       <FacetedFilter queryKey="cd" title="CD" />
       <FacetedFilter queryKey="favorite" title="Favorite" />
@@ -75,7 +73,7 @@ async function getData(adminParams: LocationQuery) {
     </div>
   </div>
 
-  <div v-if="data?.albums.length === 0" class="mt-4 flex justify-center">
+  <div v-if="data?.albums.length === 0 && !loading" class="mt-4 flex justify-center">
     <DataEmptyPlaceholder />
   </div>
   <template v-if="data?.albums && data.albums.length > 0">

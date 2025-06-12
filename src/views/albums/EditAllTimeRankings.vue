@@ -17,6 +17,7 @@ import { getCandidates } from '@/supabase/data';
 
 const route = useRoute();
 const router = useRouter();
+const loading = ref(false);
 const { favorites } = route.meta;
 
 if (!favorites) {
@@ -30,13 +31,14 @@ const data = ref<Awaited<ReturnType<typeof getCandidates>> | null>(null);
 watch(() => route.query, getData, { immediate: true });
 
 async function getData(adminParams: LocationQuery) {
-  data.value = null;
-
   try {
+    loading.value = true;
     data.value = await getCandidates(adminParams);
   } catch (error) {
     const message = error instanceof Error ? error.message : MESSAGES.ERROR;
     toast.error(message);
+  } finally {
+    loading.value = false;
   }
 }
 
@@ -69,9 +71,9 @@ const { onSubmit, submitting } = useSubmit({
   <div className="max-w-7xl">
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-8">
       <div>
-        <Search />
+        <Search :searching="loading" />
         <div
-          v-if="data?.candidates.length === 0 && route.query.search"
+          v-if="data?.candidates.length === 0 && route.query.search && !loading"
           class="mt-4 flex justify-center"
         >
           <DataEmptyPlaceholder />
