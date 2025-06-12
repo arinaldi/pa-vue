@@ -22,6 +22,7 @@ const pathMatch = computed(() => currentRoute.path === route.href);
 const active = computed(() =>
   route.items ? pathMatch.value : currentRoute.path.startsWith(route.href),
 );
+const RouteIcon = route.icon;
 
 function closeMobile() {
   setOpenMobile(false);
@@ -37,7 +38,7 @@ function closeMobile() {
         @click="closeMobile"
         :to="route.href"
       >
-        <route.icon />
+        <RouteIcon />
         {{ route.label }}
       </RouterLink>
     </SidebarMenuButton>
