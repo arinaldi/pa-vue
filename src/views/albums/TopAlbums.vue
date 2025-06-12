@@ -9,7 +9,9 @@ import DecadeLink from '@/views/albums/DecadeLink.vue';
 import TopLink from '@/components/TopLink.vue';
 import { ROUTE_HREF, SPOTIFY_URL } from '@/lib/constants';
 import { useTopAlbums } from '@/lib/use-data';
+import { useSession } from '@/lib/use-session';
 
+const session = useSession();
 const { data } = useTopAlbums();
 const favorites = data?.value?.favorites ?? {};
 </script>
@@ -33,7 +35,7 @@ const favorites = data?.value?.favorites ?? {};
                   {{ items.length.toLocaleString() }}
                 </Badge>
               </CardTitle>
-              <RouterLink :to="ROUTE_HREF.EDIT_RANKINGS.replace(':year', year)">
+              <RouterLink v-if="session" :to="ROUTE_HREF.EDIT_RANKINGS.replace(':year', year)">
                 <Button size="icon" variant="outline">
                   <Pencil class="size-4" />
                 </Button>

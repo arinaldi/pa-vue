@@ -6,6 +6,7 @@ import { toast } from 'vue-sonner';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import DataEmptyPlaceholder from '@/components/DataEmptyPlaceholder.vue';
 import {
   Table,
   TableBody,
@@ -17,7 +18,6 @@ import {
 import { MESSAGES, ROUTES_ADMIN } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import { getAdminData } from '@/supabase/data';
-import DataEmptyPlaceholder from './DataEmptyPlaceholder.vue';
 import FacetedFilter from './FacetedFilter.vue';
 import Paginate from './Paginate.vue';
 import ResetFilters from './ResetFilters.vue';
