@@ -38,7 +38,7 @@ const { onSubmit: onOtpSubmit, submitting: otpSubmitting } = useSubmit({
     }
 
     const { error } = await supabase.auth.signInWithOtp({
-      email,
+      email: data.email,
       options: { shouldCreateUser: false },
     });
 
