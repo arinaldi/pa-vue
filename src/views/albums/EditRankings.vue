@@ -22,11 +22,7 @@ if (!favorites) {
 
 const items = ref(favorites);
 const { onSubmit, submitting } = useSubmit({
-  callbacks: [
-    async () => {
-      router.push(`${ROUTE_HREF.TOP_ALBUMS}#${year}`);
-    },
-  ],
+  callbacks: [() => router.push(`${ROUTE_HREF.TOP_ALBUMS}#${year}`)],
   submitFn: async () => {
     const rankings = items.value.map((item, index) => ({
       id: item.id,

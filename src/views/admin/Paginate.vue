@@ -7,14 +7,14 @@ import { Button } from '@/components/ui/button';
 import { PER_PAGE } from '@/lib/constants';
 import PerPage from './PerPage.vue';
 
-const props = defineProps<{
+const { total } = defineProps<{
   total: number;
 }>();
 const route = useRoute();
 const router = useRouter();
 const page = ref(1);
 const perPage = ref(PER_PAGE.SMALL);
-const lastPage = computed(() => Math.ceil(props.total / perPage.value));
+const lastPage = computed(() => Math.ceil(total / perPage.value));
 const isFirstPage = computed(() => page.value === 1);
 const isLastPage = computed(() => page.value === lastPage.value);
 

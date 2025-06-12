@@ -13,29 +13,27 @@ import { typedEmailSchema, type EmailInput, type View } from './schema';
 const emit = defineEmits<{
   setView: [view: View, email: string];
 }>();
-const props = defineProps<{
+const { email } = defineProps<{
   email: string;
 }>();
 const form = useForm({
-  initialValues: {
-    email: props.email,
-  },
+  initialValues: { email },
   validationSchema: typedEmailSchema,
 });
 const { onSubmit: onEmailSubmit, submitting: emailSubmitting } = useSubmit({
   handleSubmit: form.handleSubmit,
-  submitFn: async ({ email }: EmailInput) => {
-    if (email !== EMAIL) {
+  submitFn: async (data: EmailInput) => {
+    if (data.email !== EMAIL) {
       throw new Error(MESSAGES.INVALID_DATA);
     }
 
-    emit('setView', 'password', email);
+    emit('setView', 'password', data.email);
   },
 });
 const { onSubmit: onOtpSubmit, submitting: otpSubmitting } = useSubmit({
   handleSubmit: form.handleSubmit,
-  submitFn: async ({ email }: EmailInput) => {
-    if (email !== EMAIL) {
+  submitFn: async (data: EmailInput) => {
+    if (data.email !== EMAIL) {
       throw new Error(MESSAGES.INVALID_DATA);
     }
 
@@ -48,7 +46,7 @@ const { onSubmit: onOtpSubmit, submitting: otpSubmitting } = useSubmit({
       throw new Error(error.message);
     }
 
-    emit('setView', 'otp', email);
+    emit('setView', 'otp', data.email);
   },
   successMessage: 'Check your email for the code',
 });

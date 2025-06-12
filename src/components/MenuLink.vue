@@ -13,14 +13,14 @@ import {
 import { cn } from '@/lib/utils';
 import type { Route } from '@/lib/types';
 
-const props = defineProps<{
+const { route } = defineProps<{
   route: Route;
 }>();
 const { setOpenMobile } = useSidebar();
 const currentRoute = useRoute();
-const pathMatch = computed(() => currentRoute.path === props.route.href);
+const pathMatch = computed(() => currentRoute.path === route.href);
 const active = computed(() =>
-  props.route.items ? pathMatch.value : currentRoute.path.startsWith(props.route.href),
+  route.items ? pathMatch.value : currentRoute.path.startsWith(route.href),
 );
 
 function closeMobile() {
@@ -37,7 +37,7 @@ function closeMobile() {
         @click="closeMobile"
         :to="route.href"
       >
-        <props.route.icon />
+        <route.icon />
         {{ route.label }}
       </RouterLink>
     </SidebarMenuButton>
@@ -46,7 +46,11 @@ function closeMobile() {
         <SidebarMenuSubButton as-child :is-active="currentRoute.path.startsWith(item.href)">
           <RouterLink @click="closeMobile" :to="item.href">
             <span
-              :class="cn(currentRoute.path === item.href ? 'font-medium' : 'text-muted-foreground')"
+              :class="
+                cn(
+                  currentRoute.path.startsWith(item.href) ? 'font-medium' : 'text-muted-foreground',
+                )
+              "
               >{{ item.label }}</span
             >
           </RouterLink>

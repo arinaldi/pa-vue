@@ -16,7 +16,7 @@ import { supabase } from '@/supabase/client';
 const emit = defineEmits<{
   close: [];
 }>();
-const props = defineProps<{
+const { song } = defineProps<{
   song: Song;
 }>();
 const { mutate } = useFeaturedSongs();
@@ -28,7 +28,7 @@ const { onSubmit, submitting } = useSubmit({
     },
   ],
   submitFn: async () => {
-    const { error } = await supabase.from('songs').delete().eq('id', props.song.id);
+    const { error } = await supabase.from('songs').delete().eq('id', song.id);
 
     if (error) {
       throw new Error(error.message);
@@ -42,7 +42,7 @@ const { onSubmit, submitting } = useSubmit({
   <DialogContent>
     <DialogHeader class="text-left">
       <DialogTitle>Are you sure?</DialogTitle>
-      <DialogDescription>{{ props.song.artist }} &ndash; {{ props.song.title }}</DialogDescription>
+      <DialogDescription>{{ song.artist }} &ndash; {{ song.title }}</DialogDescription>
     </DialogHeader>
     <form @submit.prevent="onSubmit">
       <DialogFooter>

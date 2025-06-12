@@ -15,7 +15,7 @@ import { typedSignInSchema, type SignInInput } from './schema';
 const emit = defineEmits<{
   cancel: [email: string];
 }>();
-const props = defineProps<{
+const { email } = defineProps<{
   email: string;
 }>();
 const router = useRouter();
@@ -28,7 +28,7 @@ const form = useForm({
 });
 
 function onCancel() {
-  emit('cancel', props.email);
+  emit('cancel', email);
 }
 
 const { onSubmit, submitting } = useSubmit({
@@ -36,7 +36,7 @@ const { onSubmit, submitting } = useSubmit({
   handleSubmit: form.handleSubmit,
   submitFn: async ({ password }: SignInInput) => {
     const { error } = await supabase.auth.signInWithPassword({
-      email: props.email,
+      email,
       password,
     });
 

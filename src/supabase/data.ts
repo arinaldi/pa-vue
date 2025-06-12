@@ -7,6 +7,7 @@ import {
   formatRankingsByYear,
   formatReleases,
   formatSongs,
+  type AllTimeListItem,
 } from '@/lib/formatters';
 import { supabase } from '@/supabase/client';
 
@@ -172,6 +173,42 @@ export async function getArtists() {
     artists: artists.map((a) => a.artist),
     count: artists.length,
   };
+}
+
+export async function getCandidates(adminParams: LocationQuery) {
+  const search = typeof adminParams.search === 'string' ? adminParams.search.trim() : '';
+  const searchTerm = `%${search}%`;
+  let candidates: AllTimeListItem[] = [];
+
+  if (search) {
+    const query = supabase
+      .from('albums')
+      .select(
+        `
+          artist,
+          id,
+          title,
+          year,
+          ranking:rankings!inner(
+            all_time_position,
+            id,
+            position
+          )
+        `,
+      )
+      .gte('rankings.position', 1)
+      .or(`artist.ilike.${searchTerm}, title.ilike.${searchTerm}`)
+      .range(0, 24)
+      .order('artist', { ascending: true });
+
+    const { data, error } = await query;
+
+    if (error) throw new Error(error.message);
+
+    candidates = formatRankingsByYear(data);
+  }
+
+  return { candidates };
 }
 
 export async function getFavorites() {

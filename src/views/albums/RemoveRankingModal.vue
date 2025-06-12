@@ -18,9 +18,11 @@ import { useAllTimeRankings } from '@/lib/use-data';
 import { useSubmit } from '@/lib/use-submit';
 import { supabase } from '@/supabase/client';
 
-const { item, removeItem } = defineProps<{
+const emit = defineEmits<{
+  remove: [id: number];
+}>();
+const { item } = defineProps<{
   item: AllTimeListItem;
-  removeItem: (id: number) => void;
 }>();
 const open = ref(false);
 const { mutate } = useAllTimeRankings();
@@ -42,7 +44,7 @@ const { onSubmit, submitting } = useSubmit({
       throw new Error(error.message);
     }
 
-    removeItem(item.id);
+    emit('remove', item.id);
 
     await mutate();
   },
@@ -63,12 +65,14 @@ function setOpen(value: boolean) {
     </DialogTrigger>
     <DialogContent>
       <DialogHeader>
-        <DialogTitle> Are you sure you want to remove this all-time ranking? </DialogTitle>
-        <DialogDescription>This action cannot be undone</DialogDescription>
+        <DialogTitle>Are you sure?</DialogTitle>
+        <DialogDescription
+          >{{ item.allTimeRanking }}. {{ item.artist }} &ndash; {{ item.title }}</DialogDescription
+        >
       </DialogHeader>
-      <form @submit.prevent.stop="{ onSubmit }">
+      <form @submit.prevent.stop="onSubmit">
         <DialogFooter>
-          <SubmitButton :submitting="submitting" variant="destructive"> Delete </SubmitButton>
+          <SubmitButton :submitting="submitting" variant="destructive">Delete</SubmitButton>
         </DialogFooter>
       </form>
     </DialogContent>

@@ -17,7 +17,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 
-const props = defineProps<{
+const { queryKey, title } = defineProps<{
   queryKey: string;
   title: string;
 }>();
@@ -27,14 +27,14 @@ const options = [
   { label: 'Enabled', value: 'true' },
   { label: 'Disabled', value: 'false' },
 ];
-const filter = ref((route.query[props.queryKey] as string) ?? '');
+const filter = ref((route.query[queryKey] as string) ?? '');
 const open = ref(false);
 const selectedOption = computed(() => options.find((o) => o.value === filter.value));
 
 watch(() => route.query, setFilter, { immediate: true });
 
 function setFilter(query: LocationQuery) {
-  const newValue = query[props.queryKey];
+  const newValue = query[queryKey];
 
   filter.value = typeof newValue === 'string' ? newValue : '';
 }
@@ -49,7 +49,7 @@ function onSelect(event: ListboxItemSelectEvent<AcceptableValue>) {
     query: {
       ...route.query,
       page: '1',
-      [props.queryKey]: value === 'clear' ? undefined : (value === 'true').toString(),
+      [queryKey]: value === 'clear' ? undefined : (value === 'true').toString(),
     },
   });
 }

@@ -21,7 +21,7 @@ interface ModalState {
   type: 'edit' | 'delete';
 }
 
-const props = defineProps<{
+const { song } = defineProps<{
   song: Song;
 }>();
 const modal = reactive<ModalState>({
@@ -60,11 +60,7 @@ function setOpen(value: boolean) {
         </DialogTrigger>
       </DropdownMenuContent>
     </DropdownMenu>
-    <EditSongModal v-if="modal.type === 'edit'" :song="props.song" @close="modal.open = false" />
-    <DeleteSongModal
-      v-if="modal.type === 'delete'"
-      :song="props.song"
-      @close="modal.open = false"
-    />
+    <EditSongModal v-if="modal.type === 'edit'" :song="song" @close="modal.open = false" />
+    <DeleteSongModal v-if="modal.type === 'delete'" :song="song" @close="modal.open = false" />
   </Dialog>
 </template>

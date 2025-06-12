@@ -6,7 +6,7 @@ import { ArrowDown } from 'lucide-vue-next';
 import { TableHead } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
 
-const props = defineProps<{
+const { prop, wrapperClassName } = defineProps<{
   prop: string;
   wrapperClassName?: string;
 }>();
@@ -22,10 +22,10 @@ function setSort(value: LocationQuery['sort']) {
   const [sortProp, desc] = typeof value == 'string' ? value.split(':') : [];
   let newSort: string | null = null;
 
-  if (sortProp !== props.prop) {
-    newSort = props.prop;
-  } else if (sortProp === props.prop && !desc) {
-    newSort = `${props.prop}:desc`;
+  if (sortProp !== prop) {
+    newSort = prop;
+  } else if (sortProp === prop && !desc) {
+    newSort = `${prop}:desc`;
   }
 
   sort.value = newSort;
@@ -46,7 +46,7 @@ function onClick() {
 <template>
   <TableHead :class="cn(`cursor-pointer`, wrapperClassName)" @click="onClick" scope="col">
     <slot />
-    <span :class="cn('ml-1 flex-none', sortPropRef === props.prop ? '' : 'invisible')">
+    <span :class="cn('ml-1 flex-none', sortPropRef === prop ? '' : 'invisible')">
       <ArrowDown aria-hidden="true" :class="cn('inline size-4', descRef ? 'rotate-180' : '')" />
     </span>
   </TableHead>

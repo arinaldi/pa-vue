@@ -4,34 +4,33 @@ import { Grip } from 'lucide-vue-next';
 
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { type AllTimeListItem } from '@/lib/formatters';
+import RemoveRankingModal from './RemoveRankingModal.vue';
 
-const props = defineProps<{
+const emit = defineEmits<{
+  remove: [id: number];
+}>();
+const { item, position, showRemove } = defineProps<{
   item: AllTimeListItem;
   position: number;
-  removeItem?: (id: number) => void;
+  showRemove?: boolean;
 }>();
 const controls = useDragControls();
 </script>
 
 <template>
-  <Reorder.Item
-    :dragControls="controls"
-    :dragListener="false"
-    :id="props.item.id"
-    :value="props.item"
-  >
+  <Reorder.Item :dragControls="controls" :dragListener="false" :id="item.id" :value="item">
     <Card class="py-0 transition-shadow has-[svg:active]:shadow-lg">
       <CardHeader class="p-4 select-none">
         <div class="flex items-start justify-between gap-2">
-          <CardTitle> {{ props.position }}. {{ props.item.title }} </CardTitle>
+          <CardTitle> {{ position }}. {{ item.title }} </CardTitle>
           <Grip
             class="size-4 shrink-0 touch-none hover:cursor-grab active:cursor-grabbing"
             @pointerdown="(event) => controls.start(event)"
           />
         </div>
         <CardDescription class="flex items-center gap-0.5">
-          {{ props.item.artist }}
-          <!-- <RemoveAllTimeRankingModal v-if="removeItem" :item="props.item" :removeItem="removeItem" /> -->
+          {{ item.artist }}
+          <RemoveRankingModal v-if="showRemove" :item="item" @remove="emit('remove', item.id)" />
         </CardDescription>
       </CardHeader>
     </Card>

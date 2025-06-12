@@ -107,6 +107,26 @@ const router = createRouter({
     },
     {
       beforeEnter: async (to, from, next) => {
+        const result = await validateSession();
+
+        if (result) {
+          return next(result);
+        }
+
+        const { count, favorites } = await getAllTimeRankings();
+
+        to.meta.count = count;
+        to.meta.favorites = favorites;
+        to.meta.title = 'Edit all-time';
+        setTitle('Edit all-time');
+        next();
+      },
+      component: () => import('@/views/albums/EditAllTimeRankings.vue'),
+      name: 'edit-all-time',
+      path: ROUTE_HREF.ALL_TIME_EDIT,
+    },
+    {
+      beforeEnter: async (to, from, next) => {
         const key = ROUTE_HREF.FEATURED_SONGS;
         let data = cache.get(key);
 

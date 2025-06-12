@@ -20,14 +20,14 @@ import { typedSongSchema, type SongInput } from './schema';
 const emit = defineEmits<{
   close: [];
 }>();
-const props = defineProps<{
+const { song } = defineProps<{
   song: Song;
 }>();
 const form = useForm({
   initialValues: {
-    artist: props.song.artist,
-    title: props.song.title,
-    link: props.song.link,
+    artist: song.artist,
+    title: song.title,
+    link: song.link,
   },
   validationSchema: typedSongSchema,
 });
@@ -41,7 +41,7 @@ const { onSubmit, submitting } = useSubmit({
   ],
   handleSubmit: form.handleSubmit,
   submitFn: async (data: SongInput) => {
-    const { error } = await supabase.from('songs').update(data).eq('id', props.song.id);
+    const { error } = await supabase.from('songs').update(data).eq('id', song.id);
 
     if (error) {
       throw new Error(error.message);

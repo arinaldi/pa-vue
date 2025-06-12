@@ -68,7 +68,7 @@ function setOpen(value: boolean) {
 <template>
   <Dialog :open="open" @update:open="setOpen">
     <DialogTrigger asChild>
-      <Button :class="props.class" variant="destructive"> Delete </Button>
+      <Button :class="props.class" variant="destructive">Delete</Button>
     </DialogTrigger>
     <DialogContent>
       <DialogHeader class="text-left">

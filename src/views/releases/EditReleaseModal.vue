@@ -21,14 +21,14 @@ import { typedReleaseSchema, type ReleaseInput } from './schema';
 const emit = defineEmits<{
   close: [];
 }>();
-const props = defineProps<{
+const { release } = defineProps<{
   release: Release;
 }>();
 const form = useForm({
   initialValues: {
-    artist: props.release.artist,
-    title: props.release.title,
-    date: props.release.date ? formatDate(props.release.date) : '',
+    artist: release.artist,
+    title: release.title,
+    date: release.date ? formatDate(release.date) : '',
   },
   validationSchema: typedReleaseSchema,
 });
@@ -48,7 +48,7 @@ const { onSubmit, submitting } = useSubmit({
         ...rest,
         date: date.length === 0 ? null : date,
       })
-      .eq('id', props.release.id);
+      .eq('id', release.id);
 
     if (error) {
       throw new Error(error.message);

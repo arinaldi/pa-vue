@@ -21,7 +21,7 @@ interface ModalState {
   type: 'edit' | 'delete';
 }
 
-const props = defineProps<{
+const { release } = defineProps<{
   release: Release;
 }>();
 const modal = reactive<ModalState>({
@@ -60,14 +60,10 @@ function setOpen(value: boolean) {
         </DialogTrigger>
       </DropdownMenuContent>
     </DropdownMenu>
-    <EditReleaseModal
-      v-if="modal.type === 'edit'"
-      :release="props.release"
-      @close="modal.open = false"
-    />
+    <EditReleaseModal v-if="modal.type === 'edit'" :release="release" @close="modal.open = false" />
     <DeleteReleaseModal
       v-if="modal.type === 'delete'"
-      :release="props.release"
+      :release="release"
       @close="modal.open = false"
     />
   </Dialog>

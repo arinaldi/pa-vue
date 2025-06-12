@@ -20,7 +20,7 @@ import { typedVerifyOtpSchema, type VerifyOtpInput } from './schema';
 const emit = defineEmits<{
   cancel: [email: string];
 }>();
-const props = defineProps<{
+const { email } = defineProps<{
   email: string;
 }>();
 const router = useRouter();
@@ -33,19 +33,19 @@ const form = useForm({
 });
 
 function onCancel() {
-  emit('cancel', props.email);
+  emit('cancel', email);
 }
 
 const { onSubmit, submitting } = useSubmit({
   callbacks: [() => router.push(ROUTES_ADMIN.base.href)],
   handleSubmit: form.handleSubmit,
   submitFn: async ({ code }: VerifyOtpInput) => {
-    if (props.email !== EMAIL) {
+    if (email !== EMAIL) {
       throw new Error(MESSAGES.ERROR);
     }
 
     const { error } = await supabase.auth.verifyOtp({
-      email: props.email,
+      email,
       token: code.join(''),
       type: 'email',
     });
