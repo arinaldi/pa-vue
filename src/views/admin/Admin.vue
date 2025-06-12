@@ -24,7 +24,7 @@ import ResetFilters from './ResetFilters.vue';
 import Search from './Search.vue';
 import SortableColumn from './SortableColumn.vue';
 
-const version = import.meta.env.VITE_APP_VERSION;
+const version = __APP_VERSION__;
 const route = useRoute();
 const loading = ref(false);
 const data = ref<Awaited<ReturnType<typeof getAdminData>> | null>(null);
