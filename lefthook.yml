@@ -20,6 +20,7 @@
 pre-commit:
   commands:
     check:
+      exclude: 'node_modules'
       glob: '*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc,vue}'
       run: npm run lefthook
       stage_fixed: true
