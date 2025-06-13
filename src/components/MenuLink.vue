@@ -31,7 +31,7 @@ function closeMobile() {
 
 <template>
   <SidebarMenuItem>
-    <SidebarMenuButton as-child :is-active="active">
+    <SidebarMenuButton as-child class="hover:text-muted-foreground" :is-active="active">
       <RouterLink
         active-class="font-medium"
         class="text-muted-foreground"
