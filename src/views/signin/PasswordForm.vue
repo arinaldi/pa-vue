@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useForm } from 'vee-validate';
+import { Eye, EyeOff } from 'lucide-vue-next';
 
 import { Button } from '@/components/ui/button';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -26,10 +28,7 @@ const form = useForm({
   },
   validationSchema: typedSignInSchema,
 });
-
-function onCancel() {
-  emit('cancel', email);
-}
+const on = ref(false);
 
 const { onSubmit, submitting } = useSubmit({
   callbacks: [() => router.push(ROUTES_ADMIN.base.href)],
@@ -53,7 +52,25 @@ const { onSubmit, submitting } = useSubmit({
       <FormItem>
         <FormLabel>Password</FormLabel>
         <FormControl>
-          <Input autofocus type="password" v-bind="componentField" />
+          <div class="relative">
+            <Input
+              autofocus
+              class="pr-10"
+              :type="on ? 'text' : 'password'"
+              v-bind="componentField"
+            />
+            <Button
+              aria-label="Show or hide password"
+              class="absolute inset-y-0 right-0 mr-0.5 flex cursor-pointer items-center"
+              @click="on = !on"
+              size="icon"
+              type="button"
+              variant="ghost"
+            >
+              <Eye v-if="on" class="size-4" />
+              <EyeOff v-else class="size-4" />
+            </Button>
+          </div>
         </FormControl>
         <FormMessage />
       </FormItem>
@@ -62,7 +79,7 @@ const { onSubmit, submitting } = useSubmit({
       <SubmitButton class="w-full" :submitting="submitting">Submit</SubmitButton>
       <Button
         class="w-full"
-        @click="onCancel"
+        @click="emit('cancel', email)"
         :size="isMobile ? 'lg' : 'default'"
         type="button"
         variant="outline"

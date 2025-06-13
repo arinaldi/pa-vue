@@ -32,10 +32,6 @@ const form = useForm({
   validationSchema: typedVerifyOtpSchema,
 });
 
-function onCancel() {
-  emit('cancel', email);
-}
-
 const { onSubmit, submitting } = useSubmit({
   callbacks: [() => router.push(ROUTES_ADMIN.base.href)],
   handleSubmit: form.handleSubmit,
@@ -92,7 +88,7 @@ const { onSubmit, submitting } = useSubmit({
       <SubmitButton class="w-full" :submitting="submitting">Submit</SubmitButton>
       <Button
         class="w-full"
-        @click="onCancel"
+        @click="emit('cancel', email)"
         :size="isMobile ? 'lg' : 'default'"
         type="button"
         variant="outline"
