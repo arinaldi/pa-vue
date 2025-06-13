@@ -11,7 +11,7 @@
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
     "format": "prettier --write src/",
-    "lefthook": "npm run lint && npm run format && npm run type-check"
+    "lefthook": "npm run lint && npm run type-check"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.10",
