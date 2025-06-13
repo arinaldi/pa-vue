@@ -92,10 +92,10 @@ async function getData(adminParams: LocationQuery) {
             <TableCell>{{ album.artist }}</TableCell>
             <TableCell>{{ album.year }}</TableCell>
             <TableCell>
-              <Disc v-if="album.cd" class="mr-1 mb-0.5 inline size-4 text-muted-foreground" />
+              <Disc v-if="album.cd" class="text-muted-foreground mr-1 mb-0.5 inline size-4" />
               <HeartPlus
                 v-if="album.wishlist"
-                class="mr-1 mb-0.5 inline size-4 text-muted-foreground"
+                class="text-muted-foreground mr-1 mb-0.5 inline size-4"
               />
               <span
                 :class="cn(album.studio ? 'font-medium' : 'font-light', album.favorite && 'italic')"
@@ -104,7 +104,7 @@ async function getData(adminParams: LocationQuery) {
               </span>
               <Check
                 v-if="album.favorite"
-                class="mb-0.5 ml-1 inline size-4 text-muted-foreground"
+                class="text-muted-foreground mb-0.5 ml-1 inline size-4"
               />
             </TableCell>
             <TableCell class="flex items-end justify-end gap-2">

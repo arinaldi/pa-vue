@@ -16,7 +16,7 @@ const favorites = data?.value?.favorites ?? [];
 </script>
 
 <template>
-  <div class="space-y-4 max-w-md" id="top">
+  <div class="max-w-md space-y-4" id="top">
     <RouterLink class="block" :to="ROUTE_HREF.ALL_TIME_EDIT">
       <Button v-if="session">Edit</Button>
     </RouterLink>
@@ -26,7 +26,7 @@ const favorites = data?.value?.favorites ?? [];
           <li
             v-for="(item, index) in favorites"
             :key="item.id"
-            :class="cn('text-sm text-muted-foreground', index > 0 && 'mt-1')"
+            :class="cn('text-muted-foreground text-sm', index > 0 && 'mt-1')"
           >
             <span>{{ item.artist }} &ndash;</span>{{ ' ' }}
             <a

@@ -60,7 +60,7 @@ const { onSubmit, submitting } = useSubmit({
         <FormLabel>One-time password</FormLabel>
         <FormControl>
           <PinInput
-            class="flex gap-2 items-center"
+            class="flex items-center gap-2"
             id="code"
             :model-value="value"
             :name="componentField.name"

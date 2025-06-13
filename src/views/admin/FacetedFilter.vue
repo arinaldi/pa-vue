@@ -81,8 +81,8 @@ function onSelect(event: ListboxItemSelectEvent<AcceptableValue>) {
               @select="onSelect"
               :value="option.value"
             >
-              <Circle v-if="option.value === 'true'" class="size-4 text-muted-foreground" />
-              <CircleOff v-if="option.value === 'false'" class="size-4 text-muted-foreground" />
+              <Circle v-if="option.value === 'true'" class="text-muted-foreground size-4" />
+              <CircleOff v-if="option.value === 'false'" class="text-muted-foreground size-4" />
               <span :class="cn(option.value === filter.toString() && 'font-semibold')">
                 {{ option.label }}
               </span>

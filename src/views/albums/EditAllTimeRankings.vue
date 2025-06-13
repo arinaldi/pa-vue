@@ -86,7 +86,9 @@ const { onSubmit, submitting } = useSubmit({
           >
             <div>
               <p class="text-sm font-medium">{{ candidate.title }}</p>
-              <p class="text-muted-foreground text-sm">{{ candidate.artist }}</p>
+              <p class="text-muted-foreground text-sm">
+                {{ candidate.artist }}
+              </p>
               <p class="text-muted-foreground text-xs">{{ candidate.year }}</p>
             </div>
             <Button

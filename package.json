@@ -10,7 +10,8 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "lefthook": "npm run lint && npm run format && npm run type-check"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.10",
@@ -44,8 +45,10 @@
     "eslint": "^9.22.0",
     "eslint-plugin-vue": "~10.0.0",
     "jiti": "^2.4.2",
+    "lefthook": "^1.11.13",
     "npm-run-all2": "^8.0.4",
     "prettier": "3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.12",
     "typescript": "~5.8.0",
     "vite": "^6.2.4",
     "vite-plugin-vue-devtools": "^7.7.2",

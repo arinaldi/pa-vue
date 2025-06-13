@@ -41,7 +41,7 @@ function goToPage(value: number) {
   <div class="mt-4 hidden sm:flex sm:items-center sm:justify-end">
     <div class="flex items-center gap-10">
       <PerPage />
-      <p class="font-medium text-sm">
+      <p class="text-sm font-medium">
         Page {{ page.toLocaleString() }} of {{ lastPage.toLocaleString() }}
       </p>
       <div class="flex items-center gap-2">
@@ -77,7 +77,7 @@ function goToPage(value: number) {
           <ChevronRight class="size-4" />
         </Button>
       </div>
-      <p class="font-medium text-sm">
+      <p class="text-sm font-medium">
         Page {{ page.toLocaleString() }} of {{ lastPage.toLocaleString() }}
       </p>
     </div>

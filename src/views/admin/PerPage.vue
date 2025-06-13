@@ -33,7 +33,7 @@ function onUpdate(value: AcceptableValue) {
 
 <template>
   <div class="flex items-center gap-x-2">
-    <p class="font-medium text-sm">Rows per page</p>
+    <p class="text-sm font-medium">Rows per page</p>
     <Select @update:model-value="onUpdate" :model-value="perPage">
       <SelectTrigger class="h-8">
         <SelectValue />

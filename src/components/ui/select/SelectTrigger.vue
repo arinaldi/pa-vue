@@ -6,7 +6,12 @@ import { SelectIcon, SelectTrigger, type SelectTriggerProps, useForwardProps } f
 import { cn } from '@/lib/utils';
 
 const props = withDefaults(
-  defineProps<SelectTriggerProps & { class?: HTMLAttributes['class']; size?: 'sm' | 'default' }>(),
+  defineProps<
+    SelectTriggerProps & {
+      class?: HTMLAttributes['class'];
+      size?: 'sm' | 'default';
+    }
+  >(),
   { size: 'default' },
 );
 

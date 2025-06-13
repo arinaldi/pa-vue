@@ -20,7 +20,7 @@ const { data } = useNewReleases();
         :key="date"
       >
         <h2
-          class="flex items-center gap-2 rounded-md bg-accent px-3 py-2 font-semibold text-xl tracking-tight"
+          class="bg-accent flex items-center gap-2 rounded-md px-3 py-2 text-xl font-semibold tracking-tight"
         >
           {{ date }}
           <Badge class="bg-background" variant="outline">

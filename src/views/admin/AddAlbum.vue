@@ -54,7 +54,7 @@ const { onSubmit, submitting } = useSubmit({
 </script>
 
 <template>
-  <form class="space-y-6 max-w-sm" @submit="onSubmit">
+  <form class="max-w-sm space-y-6" @submit="onSubmit">
     <FormField v-slot="{ componentField }" name="artist">
       <FormItem>
         <FormLabel>Artist</FormLabel>

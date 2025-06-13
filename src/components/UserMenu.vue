@@ -70,7 +70,9 @@ async function signOut() {
                 </AvatarFallback>
               </Avatar>
               <div class="grid flex-1 text-left text-sm leading-tight">
-                <span class="truncate font-semibold"> {{ session.user.user_metadata.name }} </span>
+                <span class="truncate font-semibold">
+                  {{ session.user.user_metadata.name }}
+                </span>
                 <span class="truncate text-xs">
                   {{ session.user.email }}
                 </span>
