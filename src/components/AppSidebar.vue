@@ -55,8 +55,8 @@ if (sidebarState) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" as-child>
-              <a href="#">
+            <SidebarMenuButton asChild class="hover:bg-transparent" size="lg">
+              <div>
                 <div
                   class="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg"
                 >
@@ -66,7 +66,7 @@ if (sidebarState) {
                   <span class="font-semibold">Perfect Albums</span>
                   <span class="text-muted-foreground text-xs">The best music on the next</span>
                 </div>
-              </a>
+              </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
