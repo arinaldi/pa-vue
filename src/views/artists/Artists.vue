@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { computed, reactive, ref } from 'vue';
+import { computed, onMounted, reactive, ref, shallowRef } from 'vue';
+import { useFocus } from '@vueuse/core';
 import { toast } from 'vue-sonner';
 
 import { Badge } from '@/components/ui/badge';
@@ -31,7 +32,8 @@ const session = useSession();
 const { data } = useArtists();
 const artists = data?.value?.artists ?? [];
 const search = ref('');
-const input = ref();
+const inputRef = shallowRef<HTMLInputElement>();
+const { focused } = useFocus(inputRef);
 const randomArtist = ref('');
 const fetching = ref(false);
 const results = reactive<State>({
@@ -45,9 +47,13 @@ const filteredArtists = computed(() =>
     : artists,
 );
 
+onMounted(() => {
+  focused.value = true;
+});
+
 function onClear() {
   search.value = '';
-  input.value?.$el?.focus();
+  focused.value = true;
 }
 
 function onShuffle() {
@@ -97,7 +103,7 @@ async function fetchReleases(artist: string) {
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-8">
     <div class="flex shrink-0 flex-col gap-4">
       <div class="relative">
-        <Input autofocus name="artists" placeholder="Search" ref="input" v-model="search" />
+        <Input name="artists" placeholder="Search" ref="inputRef" v-model="search" />
         <InputClearButton v-if="!fetching && search" @clear="onClear" />
         <InputSpinner v-if="fetching" />
       </div>

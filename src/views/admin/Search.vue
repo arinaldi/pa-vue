@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter, type LocationQuery } from 'vue-router';
-import { useDebounceFn } from '@vueuse/core';
+import { useDebounceFn, useFocus } from '@vueuse/core';
 
 import InputClearButton from '@/components/InputClearButton.vue';
 import InputSpinner from '@/components/InputSpinner.vue';
@@ -13,8 +13,13 @@ const { searching } = defineProps<{
 }>();
 const route = useRoute();
 const router = useRouter();
-const input = ref();
+const inputRef = ref();
 const defaultSearch = ref('');
+const { focused } = useFocus(inputRef);
+
+onMounted(() => {
+  focused.value = true;
+});
 
 watch(() => route.query.search, setSearch, { immediate: true });
 
@@ -50,9 +55,9 @@ function onClear() {
     },
   });
 
-  if (input.value?.$el) {
-    input.value.$el.value = '';
-    input.value?.$el.focus();
+  if (inputRef.value?.$el) {
+    inputRef.value.$el.value = '';
+    inputRef.value?.$el.focus();
   }
 }
 </script>
@@ -60,14 +65,13 @@ function onClear() {
 <template>
   <div class="relative">
     <Input
-      autofocus
       :default-value="defaultSearch"
       @input="debouncedSearch"
       name="search"
       placeholder="Search"
-      ref="input"
+      ref="inputRef"
     />
     <InputClearButton v-if="!searching && defaultSearch" @click="onClear" />
-    <InputSpinner v-if="searching" />
+    <InputSpinner v-if="searching && defaultSearch" />
   </div>
 </template>
