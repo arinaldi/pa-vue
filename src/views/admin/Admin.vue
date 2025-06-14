@@ -18,6 +18,7 @@ import {
 import { MESSAGES, ROUTES_ADMIN } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import { getAdminData } from '@/supabase/data';
+import AlbumActions from './AlbumActions.vue';
 import FacetedFilter from './FacetedFilter.vue';
 import Paginate from './Paginate.vue';
 import ResetFilters from './ResetFilters.vue';
@@ -107,8 +108,8 @@ async function getData(adminParams: LocationQuery) {
                 class="text-muted-foreground mb-0.5 ml-1 inline size-4"
               />
             </TableCell>
-            <TableCell class="flex items-end justify-end gap-2">
-              <!-- <AlbumActions album={a} /> -->
+            <TableCell class="flex items-center justify-end gap-2">
+              <AlbumActions :album="album" />
               <Button asChild class="size-8 p-0" variant="ghost">
                 <RouterLink
                   :to="{
