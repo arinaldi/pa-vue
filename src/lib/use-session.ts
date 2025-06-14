@@ -1,8 +1,18 @@
 import { inject, type InjectionKey, type Ref } from 'vue';
 import { type Session } from '@supabase/supabase-js';
 
-export const sessionKey = Symbol() as InjectionKey<Ref<Session | null>>;
+interface SessionContext {
+  session: Ref<Session | null>;
+}
+
+export const sessionKey: InjectionKey<SessionContext> = Symbol('session');
 
 export function useSession() {
-  return inject(sessionKey);
+  const context = inject(sessionKey);
+
+  if (!context) {
+    throw new Error('useSession must be used within a SessionProvider');
+  }
+
+  return context.session;
 }

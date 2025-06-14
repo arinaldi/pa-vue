@@ -55,15 +55,15 @@ async function getData(adminParams: LocationQuery) {
     >
       <Button type="button">Add album</Button>
     </RouterLink>
-    <div class="flex items-center gap-4 dark:text-white">
+    <div class="flex items-center gap-4 text-xs dark:text-white">
       <span class="flex items-center gap-0.5">
         <Badge variant="secondary">{{ data?.count.toLocaleString() }}</Badge>
-        <span class="text-sm leading-7"> result{{ data?.count === 1 ? '' : 's' }} </span>
+        <span class="leading-7"> result{{ data?.count === 1 ? '' : 's' }} </span>
       </span>
-      <code class="text-xs">{{ version }}</code>
+      <code>v{{ version }}</code>
       <span class="flex items-center gap-0.5">
         <Badge variant="secondary">{{ data?.cdCount.toLocaleString() }}</Badge>
-        <span class="text-sm leading-7"> CD{{ data?.cdCount === 1 ? '' : 's' }} </span>
+        <span class="leading-7"> CD{{ data?.cdCount === 1 ? '' : 's' }} </span>
       </span>
     </div>
   </div>

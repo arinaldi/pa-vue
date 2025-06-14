@@ -17,7 +17,7 @@ onMounted(() => {
   });
 });
 
-provide(sessionKey, session);
+provide(sessionKey, { session });
 </script>
 
 <template>
