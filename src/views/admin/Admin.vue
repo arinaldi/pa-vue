@@ -56,6 +56,10 @@ async function getData(adminParams: LocationQuery) {
       <Button type="button">Add album</Button>
     </RouterLink>
     <div class="flex items-center gap-4 dark:text-white">
+      <span class="flex items-center gap-0.5">
+        <Badge variant="secondary">{{ data?.count.toLocaleString() }}</Badge>
+        <span class="text-sm leading-7"> result{{ data?.count === 1 ? '' : 's' }} </span>
+      </span>
       <code class="text-xs">{{ version }}</code>
       <span class="flex items-center gap-0.5">
         <Badge variant="secondary">{{ data?.cdCount.toLocaleString() }}</Badge>
