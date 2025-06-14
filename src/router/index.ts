@@ -55,11 +55,10 @@ const router = createRouter({
         }
 
         to.meta.count = data.count;
-        to.meta.title = 'Top albums';
-        setTitle('Top albums');
         next();
       },
       component: () => import('@/views/albums/TopAlbums.vue'),
+      meta: { title: 'Top albums' },
       name: 'top-albums',
       path: ROUTE_HREF.TOP_ALBUMS,
     },
@@ -71,17 +70,14 @@ const router = createRouter({
           return next(result);
         }
 
-        const year = to.params.year as string;
-        const title = `Rankings for ${year}`;
-        const { count, favorites } = await getRankingsByYear(year);
+        const { count, favorites } = await getRankingsByYear(to.params.year as string);
 
         to.meta.count = count;
         to.meta.favorites = favorites;
-        to.meta.title = title;
-        setTitle(title);
         next();
       },
       component: () => import('@/views/albums/EditRankings.vue'),
+      meta: { title: 'Edit rankings' },
       name: 'edit-rankings',
       path: ROUTE_HREF.EDIT_RANKINGS,
     },
@@ -97,11 +93,10 @@ const router = createRouter({
         }
 
         to.meta.count = data.count;
-        to.meta.title = 'All-time';
-        setTitle('All-time');
         next();
       },
       component: () => import('@/views/albums/AllTime.vue'),
+      meta: { title: 'All-time' },
       name: 'all-time',
       path: ROUTE_HREF.ALL_TIME,
     },
@@ -117,11 +112,10 @@ const router = createRouter({
 
         to.meta.count = count;
         to.meta.favorites = favorites;
-        to.meta.title = 'Edit all-time';
-        setTitle('Edit all-time');
         next();
       },
       component: () => import('@/views/albums/EditAllTimeRankings.vue'),
+      meta: { title: 'Edit all-time' },
       name: 'edit-all-time',
       path: ROUTE_HREF.ALL_TIME_EDIT,
     },
@@ -137,11 +131,10 @@ const router = createRouter({
         }
 
         to.meta.count = data.count;
-        to.meta.title = 'Featured songs';
-        setTitle('Featured songs');
         next();
       },
       component: () => import('@/views/songs/FeaturedSongs.vue'),
+      meta: { title: 'Featured songs' },
       name: 'featured-songs',
       path: ROUTE_HREF.FEATURED_SONGS,
     },
@@ -157,11 +150,10 @@ const router = createRouter({
         }
 
         to.meta.count = data.count;
-        to.meta.title = 'New releases';
-        setTitle('New releases');
         next();
       },
       component: () => import('@/views/releases/NewReleases.vue'),
+      meta: { title: 'New releases' },
       name: 'new-releases',
       path: ROUTE_HREF.NEW_RELEASES,
     },
@@ -177,21 +169,16 @@ const router = createRouter({
         }
 
         to.meta.count = data.count;
-        to.meta.title = 'Artists';
-        setTitle('Artists');
         next();
       },
       component: () => import('@/views/artists/Artists.vue'),
+      meta: { title: 'Artists' },
       name: 'artists',
       path: ROUTE_HREF.ARTISTS,
     },
     {
-      beforeEnter: (to, from, next) => {
-        to.meta.title = 'Sign in';
-        setTitle('Sign in');
-        next();
-      },
       component: () => import('@/views/signin/Signin.vue'),
+      meta: { title: 'Sign in' },
       name: 'signin',
       path: ROUTE_HREF.SIGNIN,
     },
@@ -203,11 +190,10 @@ const router = createRouter({
           return next(result);
         }
 
-        to.meta.title = 'Admin';
-        setTitle('Admin');
         next();
       },
       component: () => import('@/views/admin/Admin.vue'),
+      meta: { title: 'Admin' },
       name: 'admin',
       path: ROUTES_ADMIN.base.href,
     },
@@ -219,11 +205,10 @@ const router = createRouter({
           return next(result);
         }
 
-        to.meta.title = 'Add album';
-        setTitle('Add album');
         next();
       },
       component: () => import('@/views/admin/AddAlbum.vue'),
+      meta: { title: 'Add album' },
       name: 'add-album',
       path: ROUTES_ADMIN.add.href,
     },
@@ -238,27 +223,28 @@ const router = createRouter({
         const { album } = await getAlbum(to.params.id as string);
 
         to.meta.album = album;
-        to.meta.title = 'Edit album';
-        setTitle('Edit album');
         next();
       },
       component: () => import('@/views/admin/EditAlbum.vue'),
+      meta: { title: 'Edit album' },
       name: 'edit-album',
       path: ROUTES_ADMIN.edit.href,
     },
     {
       component: () => import('@/views/NotFound.vue'),
+      meta: { title: 'Not found' },
       name: 'not-found',
       path: ROUTE_HREF.NOT_FOUND,
     },
   ],
 });
 
-export default router;
+router.beforeEach((to, from, next) => {
+  document.title = `${to.meta.title} | Perfect Albums`;
+  next();
+});
 
-function setTitle(value: string) {
-  document.title = `${value} | Perfect Albums`;
-}
+export default router;
 
 declare module 'vue-router' {
   interface RouteMeta {
