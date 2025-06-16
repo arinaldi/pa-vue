@@ -177,6 +177,12 @@ const router = createRouter({
       path: ROUTE_HREF.ARTISTS,
     },
     {
+      component: () => import('@/views/playlist/Playlist.vue'),
+      meta: { title: 'Playlist' },
+      name: 'playlist',
+      path: ROUTE_HREF.PLAYLIST,
+    },
+    {
       component: () => import('@/views/signin/Signin.vue'),
       meta: { title: 'Sign in' },
       name: 'signin',
