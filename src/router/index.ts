@@ -40,6 +40,7 @@ const router = createRouter({
   routes: [
     {
       component: Home,
+      meta: { title: 'Home' },
       name: 'home',
       path: '/',
     },

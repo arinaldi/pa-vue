@@ -26,7 +26,9 @@ if (!favorites) {
 
 const { mutate } = useAllTimeRankings();
 const items = ref(favorites);
-const data = ref<Awaited<ReturnType<typeof getCandidates>> | null>(null);
+const data = ref<Awaited<ReturnType<typeof getCandidates>>>({
+  candidates: [],
+});
 
 watch(() => route.query, getData, { immediate: true });
 
@@ -73,12 +75,12 @@ const { onSubmit, submitting } = useSubmit({
       <div>
         <Search :searching="loading" />
         <div
-          v-if="data?.candidates.length === 0 && route.query.search && !loading"
+          v-if="data.candidates.length === 0 && route.query.search && !loading"
           class="mt-4 flex justify-center"
         >
           <DataEmptyPlaceholder />
         </div>
-        <div v-if="data?.candidates.length" class="mt-4 space-y-3 rounded-md border p-4">
+        <div v-if="data.candidates.length" class="mt-4 space-y-3 rounded-md border p-4">
           <div
             v-for="candidate in data.candidates"
             class="flex items-start justify-between gap-2"

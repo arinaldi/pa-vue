@@ -28,7 +28,11 @@ import SortableColumn from './SortableColumn.vue';
 const version = __APP_VERSION__;
 const route = useRoute();
 const loading = ref(false);
-const data = ref<Awaited<ReturnType<typeof getAdminData>> | null>(null);
+const data = ref<Awaited<ReturnType<typeof getAdminData>>>({
+  albums: [],
+  cdCount: 0,
+  count: 0,
+});
 
 watch(() => route.query, getData, { immediate: true });
 
@@ -57,13 +61,13 @@ async function getData(adminParams: LocationQuery) {
     </RouterLink>
     <div class="flex items-center gap-4 text-xs dark:text-white">
       <span class="flex items-center gap-0.5">
-        <Badge variant="secondary">{{ data?.count.toLocaleString() }}</Badge>
-        <span class="leading-7"> result{{ data?.count === 1 ? '' : 's' }} </span>
+        <Badge variant="secondary">{{ data.count.toLocaleString() }}</Badge>
+        <span class="leading-7"> result{{ data.count === 1 ? '' : 's' }} </span>
       </span>
       <code>v{{ version }}</code>
       <span class="flex items-center gap-0.5">
-        <Badge variant="secondary">{{ data?.cdCount.toLocaleString() }}</Badge>
-        <span class="leading-7"> CD{{ data?.cdCount === 1 ? '' : 's' }} </span>
+        <Badge variant="secondary">{{ data.cdCount.toLocaleString() }}</Badge>
+        <span class="leading-7"> CD{{ data.cdCount === 1 ? '' : 's' }} </span>
       </span>
     </div>
   </div>
@@ -78,10 +82,10 @@ async function getData(adminParams: LocationQuery) {
     </div>
   </div>
 
-  <div v-if="data?.albums.length === 0 && !loading" class="mt-4 flex justify-center">
+  <div v-if="data.albums.length === 0 && !loading" class="mt-4 flex justify-center">
     <DataEmptyPlaceholder />
   </div>
-  <template v-if="data?.albums && data.albums.length > 0">
+  <template v-if="data.albums && data.albums.length > 0">
     <div class="mt-4 rounded-md border">
       <Table>
         <TableHeader>
@@ -129,6 +133,6 @@ async function getData(adminParams: LocationQuery) {
         </TableBody>
       </Table>
     </div>
-    <Paginate :total="data?.count ?? 0" />
+    <Paginate :total="data.count" />
   </template>
 </template>

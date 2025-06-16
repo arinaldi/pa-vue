@@ -86,7 +86,8 @@ async function getAlbums(adminParams: LocationQuery) {
 }
 
 async function getCdCount(adminParams: LocationQuery) {
-  const { cd, favorite, search, studio, wishlist } = adminParams;
+  const { cd, favorite, studio, wishlist } = adminParams;
+  const search = typeof adminParams.search === 'string' ? adminParams.search.trim() : '';
   const searchTerm = `%${search}%`;
 
   let query = supabase
