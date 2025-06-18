@@ -11,7 +11,9 @@
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
     "format": "prettier --write src/",
-    "lefthook": "npm run lint && npm run type-check"
+    "test": "vitest",
+    "test:run": "vitest run",
+    "lefthook": "npm run lint && npm run type-check && npm run test:run"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.10",
@@ -36,6 +38,7 @@
     "zod": "^3.25.51"
   },
   "devDependencies": {
+    "@testing-library/vue": "^8.1.0",
     "@tsconfig/node22": "^22.0.1",
     "@types/node": "^22.14.0",
     "@vitejs/plugin-vue": "^5.2.3",
@@ -44,6 +47,7 @@
     "@vue/tsconfig": "^0.7.0",
     "eslint": "^9.22.0",
     "eslint-plugin-vue": "~10.0.0",
+    "happy-dom": "^18.0.1",
     "jiti": "^2.4.2",
     "lefthook": "^1.11.13",
     "npm-run-all2": "^8.0.4",
@@ -52,6 +56,7 @@
     "typescript": "~5.8.0",
     "vite": "^6.2.4",
     "vite-plugin-vue-devtools": "^7.7.2",
+    "vitest": "^3.2.4",
     "vue-tsc": "^2.2.8"
   }
 }
