@@ -13,13 +13,14 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import type { Album } from '@/lib/types';
+import { useTopAlbums } from '@/lib/use-data';
 import { supabase } from '@/supabase/client';
 
 type Key = 'cd' | 'favorite' | 'studio' | 'wishlist';
 
 const route = useRoute();
 const router = useRouter();
-const AlbumKeys: Record<Key, string> = {
+const albumKeys: Record<Key, string> = {
   cd: 'CD',
   favorite: 'Favorite',
   studio: 'Studio',
@@ -28,6 +29,7 @@ const AlbumKeys: Record<Key, string> = {
 const { album } = defineProps<{
   album: Album;
 }>();
+const { mutate } = useTopAlbums();
 
 async function onChange(key: Key, checked: boolean) {
   const { error } = await supabase
@@ -41,6 +43,7 @@ async function onChange(key: Key, checked: boolean) {
     toast.error(error.message);
   }
 
+  await mutate();
   router.replace({
     query: {
       ...route.query,
@@ -62,7 +65,7 @@ async function onChange(key: Key, checked: boolean) {
       <DropdownMenuLabel>Actions</DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuCheckboxItem
-        v-for="[key, value] in Object.entries(AlbumKeys)"
+        v-for="[key, value] in Object.entries(albumKeys)"
         :key="key"
         :modelValue="album[key as Key]"
         @select.prevent
