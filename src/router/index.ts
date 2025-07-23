@@ -22,11 +22,9 @@ interface Data {
 }
 
 async function validateSession() {
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+  const { data } = await supabase.auth.getClaims();
 
-  if (!session) {
+  if (!data) {
     return { name: 'not-found' };
   }
 
