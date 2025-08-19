@@ -58,7 +58,11 @@ function onClear() {
 
 function onShuffle() {
   const index = Math.floor(Math.random() * artists.length);
-  randomArtist.value = artists[index];
+  const value = artists[index];
+
+  if (value) {
+    randomArtist.value = value;
+  }
 }
 
 async function fetchReleases(artist: string) {

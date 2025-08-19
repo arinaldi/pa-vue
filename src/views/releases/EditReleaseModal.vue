@@ -16,7 +16,7 @@ import type { Release } from '@/lib/types';
 import { useNewReleases } from '@/lib/use-data';
 import { useSubmit } from '@/lib/use-submit';
 import { supabase } from '@/supabase/client';
-import { typedReleaseSchema, type ReleaseInput } from './schema';
+import { releaseSchema, type ReleaseInput } from './schema';
 
 const emit = defineEmits<{
   close: [];
@@ -30,7 +30,7 @@ const form = useForm({
     title: release.title,
     date: release.date ? formatDate(release.date) : '',
   },
-  validationSchema: typedReleaseSchema,
+  validationSchema: releaseSchema,
 });
 const { mutate } = useNewReleases();
 const { onSubmit, submitting } = useSubmit({

@@ -18,7 +18,7 @@ import { MESSAGES } from '@/lib/constants';
 import { useFeaturedSongs } from '@/lib/use-data';
 import { useSubmit } from '@/lib/use-submit';
 import { supabase } from '@/supabase/client';
-import { typedSongSchema, type SongInput } from './schema';
+import { songSchema, type SongInput } from './schema';
 
 const initialValues: SongInput = {
   artist: '',
@@ -28,7 +28,7 @@ const initialValues: SongInput = {
 const open = ref(false);
 const form = useForm({
   initialValues,
-  validationSchema: typedSongSchema,
+  validationSchema: songSchema,
 });
 const { mutate } = useFeaturedSongs();
 const { onSubmit, submitting } = useSubmit({

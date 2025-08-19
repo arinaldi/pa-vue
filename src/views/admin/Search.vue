@@ -23,7 +23,7 @@ onMounted(() => {
 
 watch(() => route.query.search, setSearch, { immediate: true });
 
-function setSearch(search: LocationQuery['search']) {
+function setSearch(search: LocationQuery['search'] | undefined) {
   if (typeof search !== 'string') return;
 
   defaultSearch.value = search;

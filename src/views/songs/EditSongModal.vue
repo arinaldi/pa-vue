@@ -15,7 +15,7 @@ import type { Song } from '@/lib/types';
 import { useFeaturedSongs } from '@/lib/use-data';
 import { useSubmit } from '@/lib/use-submit';
 import { supabase } from '@/supabase/client';
-import { typedSongSchema, type SongInput } from './schema';
+import { songSchema, type SongInput } from './schema';
 
 const emit = defineEmits<{
   close: [];
@@ -29,7 +29,7 @@ const form = useForm({
     title: song.title,
     link: song.link,
   },
-  validationSchema: typedSongSchema,
+  validationSchema: songSchema,
 });
 const { mutate } = useFeaturedSongs();
 const { onSubmit, submitting } = useSubmit({

@@ -16,7 +16,7 @@ import SubmitButton from '@/components/SubmitButton.vue';
 import { MESSAGES, ROUTES_ADMIN } from '@/lib/constants';
 import { useSubmit } from '@/lib/use-submit';
 import { supabase } from '@/supabase/client';
-import { typedAlbumSchema, type AlbumInput } from './schema';
+import { albumSchema, type AlbumInput } from './schema';
 import DeleteAlbumModal from './DeleteAlbumModal.vue';
 
 const route = useRoute();
@@ -33,7 +33,7 @@ const form = useForm({
     ...album,
     year: Number(album.year),
   },
-  validationSchema: typedAlbumSchema,
+  validationSchema: albumSchema,
 });
 const { onSubmit, submitting } = useSubmit({
   callbacks: [

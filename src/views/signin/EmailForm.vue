@@ -8,7 +8,7 @@ import SubmitButton from '@/components/SubmitButton.vue';
 import { EMAIL, MESSAGES } from '@/lib/constants';
 import { useSubmit } from '@/lib/use-submit';
 import { supabase } from '@/supabase/client';
-import { typedEmailSchema, type EmailInput, type View } from './schema';
+import { emailSchema, type EmailInput, type View } from './schema';
 
 const emit = defineEmits<{
   setView: [view: View, email: string];
@@ -18,7 +18,7 @@ const { email } = defineProps<{
 }>();
 const form = useForm({
   initialValues: { email },
-  validationSchema: typedEmailSchema,
+  validationSchema: emailSchema,
 });
 const { onSubmit: onEmailSubmit, submitting: emailSubmitting } = useSubmit({
   handleSubmit: form.handleSubmit,

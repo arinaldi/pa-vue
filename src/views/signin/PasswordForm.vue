@@ -12,7 +12,7 @@ import SubmitButton from '@/components/SubmitButton.vue';
 import { ROUTES_ADMIN } from '@/lib/constants';
 import { useSubmit } from '@/lib/use-submit';
 import { supabase } from '@/supabase/client';
-import { typedSignInSchema, type SignInInput } from './schema';
+import { signInSchema, type SignInInput } from './schema';
 
 const emit = defineEmits<{
   cancel: [email: string];
@@ -26,7 +26,7 @@ const form = useForm({
   initialValues: {
     password: '',
   },
-  validationSchema: typedSignInSchema,
+  validationSchema: signInSchema,
 });
 const on = ref(false);
 

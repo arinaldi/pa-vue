@@ -102,21 +102,21 @@ export function formatSongs(songs: Song[]): SongResults {
   });
 
   songs.forEach((song) => {
-    let firstLetter = song.artist[0].toUpperCase();
+    let firstLetter = song.artist[0] ?? '';
 
     if (song.artist.startsWith('A ')) {
-      firstLetter = song.artist[2].toUpperCase();
+      firstLetter = song.artist[2] ?? '';
     } else if (song.artist.startsWith('An ')) {
-      firstLetter = song.artist[3].toUpperCase();
+      firstLetter = song.artist[3] ?? '';
     } else if (song.artist.startsWith('The ') || song.artist.startsWith('Tha ')) {
-      firstLetter = song.artist[4].toUpperCase();
+      firstLetter = song.artist[4] ?? '';
     }
 
     if (/\d/.test(firstLetter) || !results[firstLetter]) {
       firstLetter = NUMBER_SIGN;
     }
 
-    results[firstLetter].push(song);
+    results[firstLetter.toUpperCase()]?.push(song);
   });
 
   Object.values(results).forEach((s) => {

@@ -18,7 +18,7 @@ import { MESSAGES } from '@/lib/constants';
 import { useNewReleases } from '@/lib/use-data';
 import { useSubmit } from '@/lib/use-submit';
 import { supabase } from '@/supabase/client';
-import { typedReleaseSchema, type ReleaseInput } from './schema';
+import { releaseSchema, type ReleaseInput } from './schema';
 
 const initialValues: ReleaseInput = {
   artist: '',
@@ -28,7 +28,7 @@ const initialValues: ReleaseInput = {
 const open = ref(false);
 const form = useForm({
   initialValues,
-  validationSchema: typedReleaseSchema,
+  validationSchema: releaseSchema,
 });
 const { mutate } = useNewReleases();
 const { onSubmit, submitting } = useSubmit({

@@ -15,7 +15,7 @@ import SubmitButton from '@/components/SubmitButton.vue';
 import { EMAIL, MESSAGES, ROUTES_ADMIN } from '@/lib/constants';
 import { useSubmit } from '@/lib/use-submit';
 import { supabase } from '@/supabase/client';
-import { typedVerifyOtpSchema, type VerifyOtpInput } from './schema';
+import { verifyOtpSchema, type VerifyOtpInput } from './schema';
 
 const emit = defineEmits<{
   cancel: [email: string];
@@ -29,7 +29,7 @@ const form = useForm({
   initialValues: {
     code: [],
   },
-  validationSchema: typedVerifyOtpSchema,
+  validationSchema: verifyOtpSchema,
 });
 
 const { onSubmit, submitting } = useSubmit({

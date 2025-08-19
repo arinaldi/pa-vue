@@ -18,7 +18,7 @@ const descRef = ref('');
 
 watch(() => route.query.sort, setSort, { immediate: true });
 
-function setSort(value: LocationQuery['sort']) {
+function setSort(value: LocationQuery['sort'] | undefined) {
   const [sortProp, desc] = typeof value == 'string' ? value.split(':') : [];
   let newSort: string | null = null;
 
@@ -29,8 +29,8 @@ function setSort(value: LocationQuery['sort']) {
   }
 
   sort.value = newSort;
-  sortPropRef.value = sortProp;
-  descRef.value = desc;
+  sortPropRef.value = sortProp ?? '';
+  descRef.value = desc ?? '';
 }
 
 function onClick() {

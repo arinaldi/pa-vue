@@ -16,7 +16,7 @@ import SubmitButton from '@/components/SubmitButton.vue';
 import { MESSAGES, ROUTES_ADMIN } from '@/lib/constants';
 import { useSubmit } from '@/lib/use-submit';
 import { supabase } from '@/supabase/client';
-import { typedAlbumSchema, type AlbumInput } from './schema';
+import { albumSchema, type AlbumInput } from './schema';
 
 const route = useRoute();
 const router = useRouter();
@@ -30,7 +30,7 @@ const form = useForm({
     wishlist: false,
     favorite: false,
   },
-  validationSchema: typedAlbumSchema,
+  validationSchema: albumSchema,
 });
 const { onSubmit, submitting } = useSubmit({
   callbacks: [
